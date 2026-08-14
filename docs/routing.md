@@ -13,7 +13,7 @@ tss.<client>.<location>.<setup>.<screen>.<topic>.<action>
 | Segment | Description | Example(s) |
 |---|---|---|
 | `tss` | Fixed prefix for TSS player traffic | `tss` |
-| client | Who sent the message: your client id, or `play` for messages from the player | `my-app`, `control`, `play` |
+| client | Who sent the message: your client id, or `play` for messages from the player. Must be a single segment: no dots, stick to letters, digits, and dashes. A dotted client id makes the key match nothing, and the message is silently discarded | `my-app`, `control`, `play` |
 | location | Uuid of the location the message concerns | `16c3b565-c107-4fe8-982c-95c93f6c67cf` |
 | setup | Uuid of the setup | `9e060128-9cb2-474f-b45a-ca54496d81a8` |
 | screen | Screen id of the setup, starting at 0 | `0`, `1` |
@@ -32,7 +32,7 @@ A request does not have to target a single screen. Leaving segments off the midd
 
 Example: `tss.my-app.16c3b565-c107-4fe8-982c-95c93f6c67cf.9e060128-9cb2-474f-b45a-ca54496d81a8.story.stop` stops the story on every screen of that setup.
 
-Events from the player are always fully scoped: they name the exact screen they happened on.
+Events from the player are always fully scoped: they name the exact screen they happened on, so a setup or location scoped request is answered by one event per screen. [Queries](queries.md) must always be screen scoped.
 
 ## Exchanges
 

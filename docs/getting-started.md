@@ -9,9 +9,9 @@ This page covers what you need before any integration can talk to a TSS player, 
 
 ## Reaching the gateway
 
-The gateway runs on-site, next to the players. To talk to it, your integration must run on the same network as the players, and connect to the gateway host on the standard AMQP port 5672.
+The gateway runs on-site, next to the players. To talk to it, your integration must run on the same network as the players, and connect to the gateway host on the standard AMQP port 5672, virtual host `/`.
 
-Some locations also have a remote gateway. It mirrors all traffic with the on-site gateway, so your integration can run anywhere instead of on-site. Not every location has one, contact TSC support if you need it. A remote gateway depends on the location having internet: while the location is offline, messages do not arrive.
+There can also be a remote gateway. It is per customer, shared by all of that customer's locations, and mirrors all traffic with the on-site gateways, so your integration can run anywhere instead of on-site. Not every customer has one, contact TSC support if you need it. A remote gateway depends on each location having internet: while a location is offline, messages to and from its players do not arrive.
 
 ## Choose your path
 
