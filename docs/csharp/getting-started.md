@@ -1,4 +1,4 @@
-# Getting started in C#
+# Getting started in C\#
 
 This guide takes you from nothing to a first request answered by a TSS player, using the C# SDK. Read the [general getting started](../getting-started.md) first for gateway access and network requirements.
 

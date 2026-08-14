@@ -1,0 +1,60 @@
+name: Docs Site
+# Builds the MkDocs site from docs/ and deploys it to GitHub Pages. Presentation only:
+# the synced content itself is pushed from tss-play.
+on:
+  push:
+    branches:
+    - latest
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6 # https://github.com/actions/checkout
+    - name: Set up Python
+      uses: actions/setup-python@v5 # https://github.com/actions/setup-python
+      with:
+        python-version: '3.12'
+    - name: Install MkDocs Material
+      run: pip install mkdocs-material
+    - name: Add proto pages
+      run: |
+        mkdir -p docs/protos
+        for f in protos/*.proto; do
+          name=$(basename "$f")
+          {
+            echo "# $name"
+            echo
+            echo '```protobuf'
+            cat "$f"
+            echo '```'
+          } > "docs/protos/$name.md"
+        done
+        # The markdown links target the repo files; on the site they resolve to the
+        # generated proto pages and the sdk mirror on GitHub.
+        find docs -name '*.md' -exec sed -i -E \
+          -e 's#\((\.\./)+protos/([a-z]+\.proto)\)#(protos/\2.md)#g' \
+          -e 's#\((\.\./)+protos/\)#(protos/requests.proto.md)#g' \
+          -e 's#\((\.\./)+sdk/#(https://github.com/PurpleNL/tss-gateway-integrations/tree/latest/sdk/#g' {} +
+    - name: Build site
+      run: mkdocs build --strict
+    - name: Configure Pages
+      uses: actions/configure-pages@v5 # https://github.com/actions/configure-pages
+    - name: Upload site
+      uses: actions/upload-pages-artifact@v3 # https://github.com/actions/upload-pages-artifact
+      with:
+        path: site
+    - name: Deploy to Pages
+      id: deployment
+      uses: actions/deploy-pages@v4 # https://github.com/actions/deploy-pages
