@@ -1,44 +1,21 @@
 # Getting started
 
-This guide takes you from nothing to a first request answered by a TSS player.
+This page covers what you need before any integration can talk to a TSS player, regardless of language.
 
 ## What you need
 
-- The [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
-- Access to a TSS gateway: a host, a username and password, and the location and setup uuids of the player you want to drive. These are provided by Storytelling Company.
-- The `TSS.Gateway.Sdk` NuGet package, also provided by Storytelling Company.
+- Access to a TSS gateway: a host, a username and password, and the location and setup uuids of the players you want to drive. These are provided by TSC.
 - A running player with at least one story synced to it.
 
-## Connect and start a story
+## Reaching the gateway
 
-Create a console project, reference the `TSS.Gateway.Sdk` package, and connect:
+The gateway runs on-site, next to the players. To talk to it, your integration must run on the same network as the players, and connect to the gateway host on the standard AMQP port 5672.
 
-```csharp
-await using GatewayClient client = await GatewayClient.ConnectAsync(new GatewayClientOptions
-{
-    Host = "gateway host",
-    UserName = "username",
-    Password = "password",
-    ClientId = "my-app",
-    LocationUuid = "location uuid",
-    SetupUuid = "setup uuid",
-    ScreenId = 0
-});
+Some locations also have a remote gateway. It mirrors all traffic with the on-site gateway, so your integration can run anywhere instead of on-site. Not every location has one, contact TSC support if you need it. A remote gateway depends on the location having internet: while the location is offline, messages do not arrive.
 
-await client.Requests.StartStoryAsync(storyUuid);
-await client.Events.WaitForStoryStartedAsync(storyUuid);
-```
+## Choose your path
 
-`ClientId` names your application. Pick one value and keep it, the gateway uses it to keep your messages and responses separate from other clients.
+- Building in C#? Use the SDK, see the [C# getting started](csharp/getting-started.md).
+- Building in another language? Talk to the gateway directly with any RabbitMQ client. [Concepts](concepts.md) explains the model, then [Routing](routing.md), [Requests](requests.md), [Events](events.md), and [Queries](queries.md) describe the protocol. The [proto files](../protos/) define every message.
 
-The start call returns when the request is published, not when the story runs. The player reports what it actually did through events, which is what the second line waits for. [Concepts](concepts.md) explains this model.
-
-## The example integration
-
-A complete, commented walkthrough of connecting, querying, starting, and stopping lives in [`sdk/csharp/examples/`](../sdk/csharp/examples/). Its [readme](../sdk/csharp/examples/README.md) shows the exact commands and the output you should see.
-
-## Where to go from here
-
-- [Concepts](concepts.md) for the request > player > event model, addressing, and versioning.
-- The [SDK readme](../sdk/csharp/README.md) for the full client surface: requests, events, queries, options, errors, and recovery.
-- The [proto files](../protos/) for the message payloads and their field-level documentation.
+Either way, read the [best practices](best-practices.md) before you ship.

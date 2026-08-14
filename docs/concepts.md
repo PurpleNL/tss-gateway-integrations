@@ -4,8 +4,6 @@
 
 The TSS gateway is the single integration point for anything that wants to talk to TSS players. It is a message bus (RabbitMQ): your application publishes messages on it and subscribes to what comes back. The flow is always client application > gateway > player.
 
-The C# SDK wraps all of this. You never build routing keys or touch RabbitMQ directly.
-
 ## Requests, events, and queries
 
 The player is in charge of playback. An integration never commands it directly, it publishes requests:
@@ -18,17 +16,17 @@ This split keeps integrations honest about the physical world. A screen that is 
 
 ## Addressing
 
-Every player installation is identified by three values, which you receive from Storytelling Company:
+Every player installation is identified by three values, which you receive from TSC:
 
 - A **location** is the physical site.
 - A **setup** is one player installation at that location.
 - A **screen** is one output of that setup. Screen ids start at 0.
 
-A request targets one screen by default. The SDK's `RequestScope` widens it: `Setup` targets every screen of the setup, `Location` targets every screen at the location.
+A request targets one screen by default. Shorter routing keys widen it to every screen of a setup or every screen at a location, see [Routing](routing.md).
 
 ## Versioning and pinning
 
-Every version of the TSS player has a matching tag in this repository, so the protocol files and SDK source always line up with the player you integrate against.
+Every version of the TSS player has a matching tag in this repository, so the protocol files always line up with the player you integrate against.
 
 - Integrate against the `stable` branch and pin the release tag that matches your player version, for example `4.1.0`.
 - The `latest` branch follows ongoing development and can change ahead of your player. Use it to preview, not to build against.
@@ -36,4 +34,5 @@ Every version of the TSS player has a matching tag in this repository, so the pr
 ## Where the reference detail lives
 
 - Message payloads and their fields: the comments in the [proto files](../protos/).
-- The client surface (requests, events, queries, options, errors, recovery): the [SDK readme](../sdk/csharp/README.md).
+- What you can send and receive: [Requests](requests.md), [Events](events.md), and [Queries](queries.md).
+- How messages are addressed: [Routing](routing.md).
