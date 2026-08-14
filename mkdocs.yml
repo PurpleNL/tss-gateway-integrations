@@ -6,6 +6,10 @@ repo_name: tss-gateway-integrations
 
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
+  font:
+    text: Inter
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -22,6 +26,9 @@ theme:
     - navigation.sections
     - navigation.top
     - content.code.copy
+
+extra_css:
+  - stylesheets/brand.css
 
 markdown_extensions:
   - pymdownx.highlight
