@@ -9,7 +9,14 @@ The gateway is the single integration point for anything that wants to talk to T
 | Path | Contents |
 |---|---|
 | `protos/` | The protocol files (Protocol Buffers). The language-neutral contract, including reference documentation in the comments. |
-| `sdk/csharp/` | Source of the C# SDK, published as the `TSS.Gateway.Sdk` NuGet package. |
+| `sdk/csharp/` | Source of the C# SDK, published as the `TSS.Gateway.Sdk` NuGet package. Includes an example integration under `examples/`. |
+| `docs/` | Integrator documentation, authored in this repository. |
+
+## Documentation
+
+- [Getting started](docs/getting-started.md): from nothing to a first request answered by a player.
+- [Concepts](docs/concepts.md): the request > player > event model, addressing, and versioning.
+- [Example integration](sdk/csharp/examples/README.md): a complete commented walkthrough.
 
 ## Versioning
 
