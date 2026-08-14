@@ -1,0 +1,294 @@
+syntax = "proto3";
+
+import "Protos/models.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "TSS.Play.Shared.Requests";
+
+message Response {
+	oneof response {
+		Error error = 1;
+		Ok Ok = 2;
+		StoryStatusResponse storyStatus = 3;
+		AvailableStoriesResponse availableStories = 4;
+		AvailableScenesResponse availableScenes = 5;
+		CurrentStateResponse currentState = 6;
+		InstanceInfo instanceInfo = 7;
+		CorruptedAssetsResponse corruptedAssets = 8;
+		StoryDataResponse storyData = 9;
+		AvailableStory availableStory = 10;
+	};
+}
+
+message Ok {
+}
+
+message Error {
+	string message = 1;
+	int32 code = 2;
+}
+
+message StoryStatusResponse {
+	State status = 1;
+	string storyTitle = 2;
+	int32 storyVersion = 3;
+	int32 transitionDurationMs = 4;
+	string storyUuid = 5;
+}
+
+message AvailableStoriesResponse {
+	repeated AvailableStory stories = 1;
+	int32 count = 2;
+}
+
+message AvailableStory {
+	string uuid = 1;
+	string name = 2;
+	string author = 3;
+	google.protobuf.Timestamp authoredAt = 4;
+	google.protobuf.Timestamp compiledAt = 5;
+	string description = 6;
+	AvailableStoryStatus status = 7;
+	google.protobuf.Timestamp lastPlayedAt = 8;
+	repeated int32 availableVersions = 9;
+	Thumbnails thumbnails = 10;
+}
+
+message AvailableScenesResponse {
+	repeated AvailableScene scenes = 1;
+	optional string screensaverUuid = 2;
+}
+
+message AvailableScene {
+	string uuid = 1;
+	string title = 2;
+	Thumbnails thumbnails = 10;
+}
+
+message StoryStartRequest {
+	string storyUuid = 1;
+	optional int32 version = 2;
+	bool suppressPlaybackTracking = 3;
+}
+
+message VolumeChangeRequest {
+	float volume = 1;
+}
+
+message CurrentStateResponse {
+	Scene scene = 1;
+	repeated Asset assets = 2;
+	string storyTitle = 3;
+	float volume = 4;
+}
+
+message SceneChangeRequest {
+	oneof scene {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+}
+
+message AssetRequest{
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+}
+
+message AssetSeekRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	float normalizedProgress = 3;
+}
+
+message AssetVolumeChangeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	float normalizedVolume = 3;
+}
+
+message AssetMoveRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	float left = 3;
+	float bottom = 4;
+}
+
+message AssetPageChangeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	int32 page = 3;
+}	
+
+message AssetContentChangeRequest
+{
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	string content = 3;
+}
+
+message AssetCropRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	optional int32 left = 3;
+	optional int32 top = 4;
+	optional int32 right = 5;
+	optional int32 bottom = 6;
+}
+
+message AssetAnimateRectRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	optional float height = 3;
+	optional float width = 4;
+	optional float x = 5;
+	optional float y = 6;
+	int32 animationTimeInMs = 7;
+}
+
+message AssetResizeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	optional float left = 3;
+	optional float bottom = 4;
+	optional float width = 5;
+	optional float height = 6;
+}
+
+message UrlAssetInputRequest{
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	string key = 3;
+}
+
+message UrlAssetTouchRequest{
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	UrlTouch touch = 3;
+}
+
+message TriggerFireRequest {
+	string triggerUuid = 1;
+	optional bool state = 2;
+}
+
+message InstanceInfo {
+	string screenName = 1;
+	string setupName = 2;
+	int32 width = 3;
+	int32 height = 4;
+	string setupUuid = 5;
+	int32 screenId = 6;
+}
+
+message CorruptedAssetsResponse {
+	repeated CorruptedScene scenes = 1;
+}
+
+message CorruptedScene {
+	string uuid = 1;
+	string integrationId = 2;
+	string name = 3;
+	repeated CorruptedAsset assets = 4;
+	int32 index = 5;
+}
+
+message CorruptedAsset {
+	string uuid = 1;
+	string integrationId = 2;
+	string name = 3;
+	int32 code = 4;
+	CorruptedAssetType type = 5;
+}
+
+message StoryDataRequest {
+	string uuid = 1;
+	int32 version = 2;
+}
+
+message StoryDataResponse {
+	Story story = 1;
+}
+
+enum CorruptedAssetType
+{
+	UNDEFINED = 0;
+	VIDEO = 1;
+	IMAGE = 2;
+	TEXT = 3;
+	SOUND = 4;
+	URL = 5;
+	NDI = 6;
+	PDF = 7;
+}
+
+message AvailableStoriesRequest {
+	SortDirection sortDir = 1;
+	StorySortBy sortBy = 2;
+	string search = 3;
+	int32 offset = 4;
+	int32 limit = 5;
+}
+
+message AvailableStoryRequest {
+	string uuid = 1;
+}
+
+enum AvailableStoryStatus
+{
+	UNKNOWN = 0;
+	INITIALIZING = 1;
+	READY = 2;
+	IN_USE = 3;
+	INITIALIZATION_ERROR = 4;
+	DRAFT = 5;
+	UPDATING = 6;
+}
+
+enum State
+{
+	NONE = 0;
+	STARTING = 1;
+	RUNNING = 2;
+	CLOSING = 3;
+	TRANSITIONING = 4;
+	ERROR = 5;
+	PREPARING_TRANSITION = 6;
+}
+
+enum SortDirection
+{
+	ASC = 0;
+	DESC = 1;
+}
+
+enum StorySortBy
+{
+	NAME = 0;
+	AUTHOR = 1;
+	AUTHORED_AT = 2;
+	COMPILED_AT = 3;
+	LAST_PLAYED_AT = 4;
+}
+

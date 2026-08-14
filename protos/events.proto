@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+option csharp_namespace = "TSS.Play.Shared.Events";
+
+message StoryEvent {
+    string uuid = 1;
+    string integrationId = 2;
+}
+
+message SceneEvent {
+    string uuid = 1;
+    string integrationId = 2;
+}
+
+message AssetEvent {
+    string uuid = 1;
+    string integrationId = 2;
+}
+
+message MasterVolumeChangedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float volume = 3;
+}
+
+message AssetMovedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float x = 3;
+    float y = 4;
+}
+
+message AssetResizedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float width = 3;
+    float height = 4;
+    float left = 5;
+    float bottom = 6;
+}
+
+message AssetPageChangedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    int32 page = 3;
+}
+
+message AssetProgressChangedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float normalizedProgress = 3;
+}
+
+message AssetCroppedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    int32 left = 3;
+    int32 top = 4;
+    int32 right = 5;
+    int32 bottom = 6;
+}
+
+message AssetAnimatedRectEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    optional float x = 3;
+    optional float y = 4;
+    optional float width = 5;
+    optional float height = 6;
+}
+
+message AssetVolumeChangedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float normalizedVolume = 3;
+}
+
+message InstanceHeartbeatEvent {
+    string app = 1;
+    string locationUuid = 2;
+    string setupUuid = 3;
+    string setupName = 4;
+    int32 screenId = 5;
+    string screenName = 6;
+    string ip = 7;
+    int32 apiPort = 8;
+    int64 sentAt = 9;
+}
+
+enum Topic {
+    STORY = 0;
+    SCENE = 1;
+    ASSET = 2;
+    INSTANCE = 3;
+}
+
+enum StoryAction {
+    STARTED = 0;
+    STOPPED = 1;
+    MASTER_VOLUME_CHANGED = 2;
+}
+
+enum SceneAction {
+    CHANGED = 0;
+}
+
+enum InstanceAction {
+    HEARTBEAT = 0;
+}
+
+enum AssetAction {
+    SHOWN = 0;
+    HIDDEN = 1;
+    RESIZED = 2;
+    MUTED = 3;
+    UNMUTED = 4;
+    PLAYING = 5;
+    PAUSED = 6;
+    PAGE_CHANGED = 7;
+    CONTENT_CHANGED = 8;
+    MOVED = 9;
+    SEEK_ENDED = 10;
+    CROPPED = 11;
+    VOLUME_CHANGED = 12;
+}

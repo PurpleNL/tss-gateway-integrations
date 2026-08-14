@@ -1,0 +1,295 @@
+syntax = "proto3";
+
+option csharp_namespace = "TSS.Play.Shared.Models";
+
+message Story {
+    string uuid = 1;
+    string title = 2;
+    int32 version = 3;
+    string activeSceneUuid = 4;
+    float volume = 5;
+    optional Screensaver screensaver = 6;
+    repeated Scene scenes = 7;
+    repeated Asset assets = 8;
+    repeated Trigger triggers = 9;
+    string integrationId = 10;
+    repeated Group groups = 11;
+}
+
+message Group {
+    string uuid = 1;
+    string name = 2;
+    int32 baseLayer = 3;
+    repeated string inScenes = 4;
+    repeated string assets = 5;
+}
+
+message Screensaver {
+    string uuid = 1;
+    int32 delay = 2;
+}
+
+message Scene {
+    string uuid = 1;
+    string title = 2;
+    bool autoSwitch = 3;
+    repeated string assets = 4;
+    oneof transition {
+        EffectTransition effectTransition = 5;
+        CustomTransition customTransition = 6;
+    };
+    string integrationId = 7;
+    Thumbnails thumbnails = 8;
+}
+
+message CustomTransition {
+    int32 duration = 1;
+    repeated string assets = 2;
+}
+
+message EffectTransition {
+    EffectType effectType = 1;
+    int32 duration = 2;
+    EaseType easeType = 3;
+    float feather = 4;
+    bool playPerSegment = 5;
+}
+
+message Thumbnails {
+    string default = 1;
+    string large = 2;
+}
+
+message Asset {
+    string uuid = 1;
+    string title = 2;
+    int32 layer = 3;
+    float opacity = 4;
+    bool draggable = 6;
+    bool roundedCorners = 7;
+    bool visible = 8;
+    Rectangle rectangle = 9;
+    Margins margins = 10;
+    oneof data {
+        UrlData urlData = 11;
+        VideoData videoData = 12;
+        TextData textData = 13;
+        SoundData soundData = 14;
+        PdfData pdfData = 15;
+        NdiData ndiData = 16;
+        ImageData imageData = 17;
+    }
+    string integrationId = 18;
+    bool hasOnClickActions = 19;
+    Thumbnails thumbnails = 20;
+}
+
+message Rectangle {
+    float x = 1;
+    float y = 2;
+    float width = 3;
+    float height = 4;
+}
+
+message Margins {
+    int32 left = 1;
+    int32 right = 2;
+    int32 top = 3;
+    int32 bottom = 4;
+}
+
+message UrlData {
+    bool urlNavigation = 1;
+    string url = 2;
+    float volume = 3;
+    optional bool back = 4;
+    optional bool forward = 5;
+    optional bool home = 6;
+    optional bool inputFocus = 7;
+    optional bool streamActive = 8;
+    repeated UrlRequest requests = 9;
+    optional bool isMuted = 10;
+}
+
+message VideoData {
+    bool play = 1;
+    bool loop = 3;
+    bool split = 4;
+    optional float volume = 5;
+    optional double progress = 6;
+    optional int32 duration = 7;
+    optional string codec = 8;
+    repeated FileData files = 9;
+    optional bool isLoaded = 10;
+    optional bool isMuted = 11;
+}
+
+message TextData {
+    TextHorizontalAlignment horizontalAlignment = 1;
+    TextVerticalAlignment verticalAlignment = 2;
+    string color = 3;
+    string font = 4 [deprecated = true];
+    int32 size = 5;
+    string text = 6;
+    bool bold = 7 [deprecated = true];
+    bool italic = 8 [deprecated = true];
+    bool underline = 9;
+    string fontFile = 10;
+    float lineHeight = 11;
+}
+
+message SoundData
+{
+    bool play = 1;
+    bool loop = 2;
+    FileData file = 3;
+    optional int32 duration = 4;
+    optional float volume = 5;
+    optional double progress = 6;
+    optional bool isMuted = 7;
+}
+
+message PdfData {
+    int32 page = 1;
+    int32 pageCount = 2;
+    FileData file = 3;
+}
+
+message NdiData {
+    string sourceName = 1;
+    bool visibleOnConnection = 2;
+    float volume = 3;
+    optional bool connected = 4;
+    optional bool isMuted = 5;
+}
+
+message ImageData {
+    repeated FileData files = 1;
+}
+
+message FileData {
+    string uuid = 1;
+    int32 version = 2;
+    string name = 3;
+    optional string path = 4;
+}
+
+message UrlRequest{
+    oneof request{
+        NavigationType navigation = 1;
+        string key = 2;
+        UrlTouch touch = 3;
+    }
+    optional bool internal = 4;
+}
+
+message UrlTouch{
+    UrlTouchType type = 1;
+    float x = 2;
+    float y = 3;
+    int32 touchId = 4;
+}
+
+message Trigger {
+    string uuid = 1;
+    repeated Action actions = 2;
+}
+
+message Action {
+    string uuid = 1;
+    int32 screenId = 2;
+    ActionType type = 3;
+}
+
+enum UrlTouchType {
+    START = 0;
+    END = 1;
+    MOVE = 2;
+}
+
+enum NavigationType {
+    BACK = 0;
+    FORWARD = 1;
+    REFRESH = 2;
+    HOME = 3;
+}
+
+enum TextHorizontalAlignment {
+    LEFT = 0;
+    CENTER = 1;
+    RIGHT = 2;
+}
+
+enum TextVerticalAlignment {
+    TOP = 0;
+    MIDDLE = 1;
+    BOTTOM = 2;
+}
+
+enum ActionType {
+    SCENE_GOTO = 0;
+    ASSET_TOGGLE = 1;
+    ASSET_SHOW = 2;
+    ASSET_HIDE = 3;
+    SCENE_NEXT = 4;
+    SCENE_PREV = 5;
+}
+
+enum EffectType{
+    DEFAULT = 0;
+    FADE = 1;
+    DIRECT = 2;
+    PUSH_LEFT = 3;
+    PUSH_RIGHT = 4;
+    PUSH_UP = 5;
+    PUSH_DOWN = 6;
+    COVER_LEFT = 7;
+    COVER_RIGHT = 8;
+    COVER_UP = 9;
+    COVER_DOWN = 10;
+    UNCOVER_LEFT = 11;
+    UNCOVER_RIGHT = 12;
+    UNCOVER_UP = 13;
+    UNCOVER_DOWN = 14;
+    WIPE_LEFT = 15;
+    WIPE_RIGHT = 16;
+    WIPE_UP = 17;
+    WIPE_DOWN = 18;
+    CURTAIN_HORIZONTAL = 19;
+    CURTAIN_VERTICAL = 20;
+    FALL_OVER = 21;
+    CUBE = 22;
+    BATMAN = 23;
+}
+
+enum EaseType{
+    LINEAR = 0;
+    SMOOTH = 1;
+    BUTTERSMOOTH = 2;
+    EXTRA_BUTTERSMOOTH = 3;
+    QUAD_IN = 4;
+    QUAD_OUT = 5;
+    QUAD_IN_OUT = 6;
+    CUBIC_IN = 7;
+    CUBIC_OUT = 8;
+    CUBIC_IN_OUT = 9;
+    QUART_IN = 10;
+    QUART_OUT = 11;
+    QUART_IN_OUT = 12;
+    QUAD_CIRC_IN = 13;
+    QUAD_CIRC_OUT = 14;
+    QUAD_CIRC_IN_OUT = 15;
+    CUBIC_CIRC_IN = 16;
+    CUBIC_CIRC_OUT = 17;
+    CUBIC_CIRC_IN_OUT = 18;
+    QUART_CIRC_IN = 19;
+    QUART_CIRC_OUT = 20;
+    QUART_CIRC_IN_OUT = 21;
+    BOUNCE_IN = 22;
+    BOUNCE_OUT = 23;
+    BOUNCE_IN_OUT = 24;
+    ELASTIC_IN = 25;
+    ELASTIC_OUT = 26;
+    ELASTIC_IN_OUT = 27;
+    ASYNC_SMOOTH = 28;
+}
