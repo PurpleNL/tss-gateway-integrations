@@ -19,3 +19,13 @@ There can also be a remote gateway. It is per customer, shared by all of that cu
 - Building in another language? Talk to the gateway directly with any RabbitMQ client. [Concepts](concepts.md) explains the model, then [Routing](routing.md), [Requests](requests.md), [Events](events.md), and [Queries](queries.md) describe the protocol. The [proto files](../protos/) define every message.
 
 Either way, read the [best practices](best-practices.md) before you ship.
+
+## Generating code from the protos
+
+The proto files compile with a stock [protoc](https://protobuf.dev/installation/), pick the output flag for your language:
+
+```
+protoc -I protos --python_out=gen protos/models.proto protos/events.proto protos/requests.proto
+```
+
+`requests.proto` imports `models.proto` and `google/protobuf/timestamp.proto`; the latter ships with protoc.
