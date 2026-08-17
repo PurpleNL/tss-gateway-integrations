@@ -37,7 +37,7 @@ jobs:
             echo "# $name"
             echo
             echo '```protobuf'
-            cat "$f"
+            awk 1 "$f" # ensures a trailing newline so the closing fence stays on its own line
             echo '```'
           } > "docs/protos/$name.md"
         done
