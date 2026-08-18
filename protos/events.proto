@@ -2,27 +2,41 @@ syntax = "proto3";
 
 option csharp_namespace = "TSS.Play.Shared.Events";
 
+// Payload messages for the events the player publishes on tss-events-publish (consumed from
+// tss-events-listen). The routing key names the topic and action, for example story.started;
+// the payload identifies the subject and carries the new value where there is one.
+//
+// Every uuid/integrationId pair identifies the story, scene, or asset the event is about.
+// Positions and sizes are in pixels on the screen's canvas, origin at the bottom-left, y up.
+// Volumes and progress are normalized: 0 to 1.
+
+// story.started and story.stopped: identifies the story.
 message StoryEvent {
     string uuid = 1;
     string integrationId = 2;
 }
 
+// scene.changed: identifies the scene that became active.
 message SceneEvent {
     string uuid = 1;
     string integrationId = 2;
 }
 
+// Events that only identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
+// asset.muted, asset.unmuted, and asset.content-changed.
 message AssetEvent {
     string uuid = 1;
     string integrationId = 2;
 }
 
+// story.master-volume-changed: uuid/integrationId identify the story.
 message MasterVolumeChangedEvent {
     string uuid = 1;
     string integrationId = 2;
     float volume = 3;
 }
 
+// asset.moved: x/y is the new bottom-left corner of the asset.
 message AssetMovedEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -30,6 +44,7 @@ message AssetMovedEvent {
     float y = 4;
 }
 
+// asset.resized: the new size and bottom-left corner of the asset.
 message AssetResizedEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -39,18 +54,21 @@ message AssetResizedEvent {
     float bottom = 6;
 }
 
+// asset.page-changed.
 message AssetPageChangedEvent {
     string uuid = 1;
     string integrationId = 2;
-    int32 page = 3;
+    int32 page = 3; // The new zero-based page index.
 }
 
+// asset.seek-ended.
 message AssetProgressChangedEvent {
     string uuid = 1;
     string integrationId = 2;
-    float normalizedProgress = 3;
+    float normalizedProgress = 3; // The position the seek landed on.
 }
 
+// asset.cropped: the now-applied crop margins, in pixels from the asset's original edges.
 message AssetCroppedEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -60,6 +78,7 @@ message AssetCroppedEvent {
     int32 bottom = 6;
 }
 
+// Currently unpublished; asset.resized and asset.moved report the outcome of an animation.
 message AssetAnimatedRectEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -69,22 +88,24 @@ message AssetAnimatedRectEvent {
     optional float height = 6;
 }
 
+// Currently unpublished; asset.volume-changed carries AssetVolumeChangeRequest (requests.proto).
 message AssetVolumeChangedEvent {
     string uuid = 1;
     string integrationId = 2;
     float normalizedVolume = 3;
 }
 
+// instance.heartbeat: identifies this player instance, published every second by default.
 message InstanceHeartbeatEvent {
-    string app = 1;
+    string app = 1; // The publishing application, "play" for the player.
     string locationUuid = 2;
     string setupUuid = 3;
     string setupName = 4;
     int32 screenId = 5;
     string screenName = 6;
     string ip = 7;
-    int32 apiPort = 8;
-    int64 sentAt = 9;
+    int32 apiPort = 8; // Port of the player's local HTTP API on that ip.
+    int64 sentAt = 9; // Publish time as Unix milliseconds (UTC).
 }
 
 enum Topic {

@@ -20,6 +20,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<!-- The example integration is its own project; without this the SDK would compile its
+		     sources into the package assembly. -->
+		<Compile Remove="examples/**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
 		<PackageReference Include="Google.Protobuf" Version="3.29.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

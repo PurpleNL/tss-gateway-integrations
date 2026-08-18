@@ -2,12 +2,16 @@ syntax = "proto3";
 
 option csharp_namespace = "TSS.Play.Shared.Models";
 
+// The story data structures as the player runs them, returned by the story.data query and, for
+// the active scene, by scene.status. Positions and sizes are in pixels on the screen's canvas,
+// origin at the bottom-left, y up. Volumes are normalized: 0 to 1.
+
 message Story {
     string uuid = 1;
     string title = 2;
     int32 version = 3;
     string activeSceneUuid = 4;
-    float volume = 5;
+    float volume = 5; // Master volume, 0 to 1.
     optional Screensaver screensaver = 6;
     repeated Scene scenes = 7;
     repeated Asset assets = 8;
@@ -16,24 +20,25 @@ message Story {
     repeated Group groups = 11;
 }
 
+// A set of assets that stays visible across the scenes named in inScenes.
 message Group {
     string uuid = 1;
     string name = 2;
-    int32 baseLayer = 3;
+    int32 baseLayer = 3; // Layer the group renders from; member asset layers stack on top of it.
     repeated string inScenes = 4;
     repeated string assets = 5;
 }
 
 message Screensaver {
-    string uuid = 1;
-    int32 delay = 2;
+    string uuid = 1; // Scene to switch to.
+    int32 delay = 2; // Milliseconds without interaction before the screensaver scene activates.
 }
 
 message Scene {
     string uuid = 1;
     string title = 2;
-    bool autoSwitch = 3;
-    repeated string assets = 4;
+    bool autoSwitch = 3; // True switches to the next scene automatically when the background video finishes.
+    repeated string assets = 4; // Uuids of the assets in this scene.
     oneof transition {
         EffectTransition effectTransition = 5;
         CustomTransition customTransition = 6;
@@ -42,19 +47,21 @@ message Scene {
     Thumbnails thumbnails = 8;
 }
 
+// A transition rendered by story-authored assets instead of a built-in effect.
 message CustomTransition {
-    int32 duration = 1;
-    repeated string assets = 2;
+    int32 duration = 1; // Milliseconds.
+    repeated string assets = 2; // Uuids of the assets that make up the transition.
 }
 
 message EffectTransition {
     EffectType effectType = 1;
-    int32 duration = 2;
+    int32 duration = 2; // Milliseconds.
     EaseType easeType = 3;
     float feather = 4;
-    bool playPerSegment = 5;
+    bool playPerSegment = 5; // True runs the effect per horizontal screen segment instead of over the whole screen at once.
 }
 
+// Thumbnail image paths of a story, scene, or asset.
 message Thumbnails {
     string default = 1;
     string large = 2;
@@ -63,13 +70,13 @@ message Thumbnails {
 message Asset {
     string uuid = 1;
     string title = 2;
-    int32 layer = 3;
-    float opacity = 4;
+    int32 layer = 3; // Render order within the scene, higher renders on top.
+    float opacity = 4; // 0 (fully transparent) to 1 (opaque).
     bool draggable = 6;
     bool roundedCorners = 7;
     bool visible = 8;
     Rectangle rectangle = 9;
-    Margins margins = 10;
+    Margins margins = 10; // Applied crop, see AssetCropRequest in requests.proto.
     oneof data {
         UrlData urlData = 11;
         VideoData videoData = 12;
@@ -84,6 +91,7 @@ message Asset {
     Thumbnails thumbnails = 20;
 }
 
+// Position and size in canvas pixels; x/y is the bottom-left corner.
 message Rectangle {
     float x = 1;
     float y = 2;
@@ -91,6 +99,7 @@ message Rectangle {
     float height = 4;
 }
 
+// Crop margins in pixels, measured inward from the asset's original edges.
 message Margins {
     int32 left = 1;
     int32 right = 2;
@@ -98,6 +107,7 @@ message Margins {
     int32 bottom = 4;
 }
 
+// A web page asset.
 message UrlData {
     bool urlNavigation = 1;
     string url = 2;
@@ -107,17 +117,17 @@ message UrlData {
     optional bool home = 6;
     optional bool inputFocus = 7;
     optional bool streamActive = 8;
-    repeated UrlRequest requests = 9;
+    repeated UrlRequest requests = 9; // Pending page interactions, see the url asset requests in requests.proto.
     optional bool isMuted = 10;
 }
 
 message VideoData {
     bool play = 1;
     bool loop = 3;
-    bool split = 4;
+    bool split = 4; // True when the video is encoded as vertically stacked parts because the source is wider than 7680 pixels.
     optional float volume = 5;
-    optional double progress = 6;
-    optional int32 duration = 7;
+    optional double progress = 6; // Playback position, 0 (start) to 1 (end).
+    optional int32 duration = 7; // Milliseconds.
     optional string codec = 8;
     repeated FileData files = 9;
     optional bool isLoaded = 10;
@@ -127,7 +137,7 @@ message VideoData {
 message TextData {
     TextHorizontalAlignment horizontalAlignment = 1;
     TextVerticalAlignment verticalAlignment = 2;
-    string color = 3;
+    string color = 3; // Hex color string, for example "#FF8800".
     string font = 4 [deprecated = true];
     int32 size = 5;
     string text = 6;
@@ -143,18 +153,19 @@ message SoundData
     bool play = 1;
     bool loop = 2;
     FileData file = 3;
-    optional int32 duration = 4;
+    optional int32 duration = 4; // Milliseconds.
     optional float volume = 5;
-    optional double progress = 6;
+    optional double progress = 6; // Playback position, 0 (start) to 1 (end).
     optional bool isMuted = 7;
 }
 
 message PdfData {
-    int32 page = 1;
+    int32 page = 1; // Zero-based page index.
     int32 pageCount = 2;
     FileData file = 3;
 }
 
+// An NDI (network video) source shown as an asset.
 message NdiData {
     string sourceName = 1;
     bool visibleOnConnection = 2;
@@ -183,13 +194,15 @@ message UrlRequest{
     optional bool internal = 4;
 }
 
+// A touch on a url asset's page. Coordinates are normalized to the page, 0 to 1, and clamped.
 message UrlTouch{
     UrlTouchType type = 1;
     float x = 2;
     float y = 3;
-    int32 touchId = 4;
+    int32 touchId = 4; // Identifies the finger across start/move/end, for multi-touch gestures.
 }
 
+// A story-authored trigger; fire it with trigger.fire (requests.proto).
 message Trigger {
     string uuid = 1;
     repeated Action actions = 2;

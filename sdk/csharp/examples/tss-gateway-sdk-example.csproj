@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>TSS.Gateway.Sdk.Example</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- A real integration references the TSS.Gateway.Sdk NuGet package instead of these two
+		     projects. The message types live in tss-play-shared, which the package bakes in but
+		     the SDK project does not expose, so the example references it directly. -->
+		<ProjectReference Include="..\tss-gateway-sdk.csproj" />
+		<ProjectReference Include="..\..\tss-play-shared\tss-play-shared.csproj" />
+	</ItemGroup>
+
+</Project>

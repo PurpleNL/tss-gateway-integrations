@@ -1,10 +1,19 @@
 syntax = "proto3";
 
-import "Protos/models.proto";
+import "models.proto";
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "TSS.Play.Shared.Requests";
 
+// Payload messages for the requests published on tss-requests-publish and the queries published on
+// tss-api-publish, plus the Response envelope every query answer is wrapped in.
+//
+// Conventions used throughout:
+// - Assets and scenes are addressed by either their uuid or their integration id (a oneof).
+// - Positions and sizes are in pixels on the screen's canvas, origin at the bottom-left, y up.
+// - Volumes and progress are normalized: 0 to 1.
+
+// The envelope of every query response: either the error or the field matching the query.
 message Response {
 	oneof response {
 		Error error = 1;
@@ -23,24 +32,28 @@ message Response {
 message Ok {
 }
 
+// The player rejected the request or query.
 message Error {
-	string message = 1;
+	string message = 1; // Human-readable reason.
 	int32 code = 2;
 }
 
+// Answer to story.status.
 message StoryStatusResponse {
 	State status = 1;
 	string storyTitle = 2;
 	int32 storyVersion = 3;
-	int32 transitionDurationMs = 4;
+	int32 transitionDurationMs = 4; // Duration of the running scene transition, 0 outside one.
 	string storyUuid = 5;
 }
 
+// Answer to story.available-stories.
 message AvailableStoriesResponse {
 	repeated AvailableStory stories = 1;
-	int32 count = 2;
+	int32 count = 2; // Number of entries in stories, after search/offset/limit were applied.
 }
 
+// One story that is synced to this player. Also the answer to story.available-story.
 message AvailableStory {
 	string uuid = 1;
 	string name = 2;
@@ -50,10 +63,11 @@ message AvailableStory {
 	string description = 6;
 	AvailableStoryStatus status = 7;
 	google.protobuf.Timestamp lastPlayedAt = 8;
-	repeated int32 availableVersions = 9;
+	repeated int32 availableVersions = 9; // Versions on this player; StoryStartRequest.version must be one of these.
 	Thumbnails thumbnails = 10;
 }
 
+// Answer to story.available-scenes: the scenes of the running story.
 message AvailableScenesResponse {
 	repeated AvailableScene scenes = 1;
 	optional string screensaverUuid = 2;
@@ -67,19 +81,20 @@ message AvailableScene {
 
 message StoryStartRequest {
 	string storyUuid = 1;
-	optional int32 version = 2;
-	bool suppressPlaybackTracking = 3;
+	optional int32 version = 2; // Specific version to start; absent starts the newest version on the player.
+	bool suppressPlaybackTracking = 3; // True skips the last-played bookkeeping, meant for automated smoke tests.
 }
 
 message VolumeChangeRequest {
-	float volume = 1;
+	float volume = 1; // Master volume, 0 to 1. Values outside that range are rejected.
 }
 
+// Answer to scene.status: the active scene and the current state of its assets.
 message CurrentStateResponse {
 	Scene scene = 1;
 	repeated Asset assets = 2;
 	string storyTitle = 3;
-	float volume = 4;
+	float volume = 4; // Master volume, 0 to 1.
 }
 
 message SceneChangeRequest {
@@ -89,6 +104,7 @@ message SceneChangeRequest {
 	}
 }
 
+// Addresses one asset by uuid, or every asset carrying the integration id.
 message AssetRequest{
 	oneof asset {
 		string uuid = 1;
@@ -101,7 +117,7 @@ message AssetSeekRequest {
 		string uuid = 1;
 		string integrationId = 2;
 	}
-	float normalizedProgress = 3;
+	float normalizedProgress = 3; // Target position in the media, 0 (start) to 1 (end).
 }
 
 message AssetVolumeChangeRequest {
@@ -109,9 +125,10 @@ message AssetVolumeChangeRequest {
 		string uuid = 1;
 		string integrationId = 2;
 	}
-	float normalizedVolume = 3;
+	float normalizedVolume = 3; // 0 to 1. Values outside that range are rejected.
 }
 
+// Moves the asset's bottom-left corner, in canvas pixels.
 message AssetMoveRequest {
 	oneof asset {
 		string uuid = 1;
@@ -126,8 +143,8 @@ message AssetPageChangeRequest {
 		string uuid = 1;
 		string integrationId = 2;
 	}
-	int32 page = 3;
-}	
+	int32 page = 3; // Zero-based page index, 0 to pageCount - 1. Out-of-range values are rejected.
+}
 
 message AssetContentChangeRequest
 {
@@ -135,9 +152,11 @@ message AssetContentChangeRequest
 		string uuid = 1;
 		string integrationId = 2;
 	}
-	string content = 3;
+	string content = 3; // New text (text asset) or image uri (image asset). Rejected when it equals the current content.
 }
 
+// Crops the asset by moving its edges inward. Margins are pixels measured from the asset's
+// original edges, must be 0 or positive, and fields left out keep their current value.
 message AssetCropRequest {
 	oneof asset {
 		string uuid = 1;
@@ -149,6 +168,8 @@ message AssetCropRequest {
 	optional int32 bottom = 6;
 }
 
+// Animates the asset to a new rectangle over animationTimeInMs. Fields left out keep their
+// current value. Position and size in canvas pixels, x/y is the bottom-left corner.
 message AssetAnimateRectRequest {
 	oneof asset {
 		string uuid = 1;
@@ -161,6 +182,8 @@ message AssetAnimateRectRequest {
 	int32 animationTimeInMs = 7;
 }
 
+// Resizes and/or repositions the asset immediately. Fields left out keep their current value.
+// Position and size in canvas pixels, left/bottom is the bottom-left corner.
 message AssetResizeRequest {
 	oneof asset {
 		string uuid = 1;
@@ -177,7 +200,7 @@ message UrlAssetInputRequest{
 		string uuid = 1;
 		string integrationId = 2;
 	}
-	string key = 3;
+	string key = 3; // The key to send to the page, a character or a key name such as "Enter".
 }
 
 message UrlAssetTouchRequest{
@@ -190,18 +213,20 @@ message UrlAssetTouchRequest{
 
 message TriggerFireRequest {
 	string triggerUuid = 1;
-	optional bool state = 2;
+	optional bool state = 2; // For toggle actions: true forces show, false forces hide, absent toggles.
 }
 
+// Answer to instance.info.
 message InstanceInfo {
 	string screenName = 1;
 	string setupName = 2;
-	int32 width = 3;
+	int32 width = 3; // Screen resolution in pixels.
 	int32 height = 4;
 	string setupUuid = 5;
 	int32 screenId = 6;
 }
 
+// Answer to story.corrupted-assets: assets of the running story that failed to load, per scene.
 message CorruptedAssetsResponse {
 	repeated CorruptedScene scenes = 1;
 }
@@ -211,14 +236,14 @@ message CorruptedScene {
 	string integrationId = 2;
 	string name = 3;
 	repeated CorruptedAsset assets = 4;
-	int32 index = 5;
+	int32 index = 5; // Zero-based position of the scene in the story's scene order.
 }
 
 message CorruptedAsset {
 	string uuid = 1;
 	string integrationId = 2;
 	string name = 3;
-	int32 code = 4;
+	int32 code = 4; // Player error code describing why the asset failed to load.
 	CorruptedAssetType type = 5;
 }
 
@@ -227,6 +252,7 @@ message StoryDataRequest {
 	int32 version = 2;
 }
 
+// Answer to story.data: the full story structure, see models.proto.
 message StoryDataResponse {
 	Story story = 1;
 }
@@ -243,12 +269,13 @@ enum CorruptedAssetType
 	PDF = 7;
 }
 
+// Query for story.available-stories.
 message AvailableStoriesRequest {
 	SortDirection sortDir = 1;
 	StorySortBy sortBy = 2;
-	string search = 3;
+	string search = 3; // Filters on the story name.
 	int32 offset = 4;
-	int32 limit = 5;
+	int32 limit = 5; // Maximum number of stories returned. The protobuf default of 0 returns none, so always set it.
 }
 
 message AvailableStoryRequest {
@@ -266,6 +293,7 @@ enum AvailableStoryStatus
 	UPDATING = 6;
 }
 
+// Playback state of the player.
 enum State
 {
 	NONE = 0;
@@ -291,4 +319,3 @@ enum StorySortBy
 	COMPILED_AT = 3;
 	LAST_PLAYED_AT = 4;
 }
-
