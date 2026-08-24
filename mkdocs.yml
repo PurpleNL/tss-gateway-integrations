@@ -41,6 +41,7 @@ nav:
   - Getting started: getting-started.md
   - Concepts: concepts.md
   - Best practices: best-practices.md
+  - Postman collection: postman.md
   - Protocol:
       - Routing: routing.md
       - Authentication: authentication.md
