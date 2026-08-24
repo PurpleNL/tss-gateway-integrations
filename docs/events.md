@@ -52,4 +52,4 @@ An event is the player reporting a state change: a story started, a scene change
 
 | Topic and action | Payload message | Fired when |
 |---|---|---|
-| `instance.heartbeat` | InstanceHeartbeatEvent | Every second (deployment default) while the player runs, identifies the instance (setup, screen, ip) |
+| `instance.heartbeat` | InstanceHeartbeatEvent | Every second (deployment default) while the player runs, identifies the instance (setup, screen) |
