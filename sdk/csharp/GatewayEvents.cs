@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using TSS.Play.Shared.Events;
+using TSS.Gateway.Sdk.Events;
 
 // ReSharper disable UnusedMember.Global
 

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using RabbitMQ.Client;
-using TSS.Play.Shared.Requests;
+using TSS.Gateway.Sdk.Requests;
 
 // ReSharper disable UnusedMember.Global
 

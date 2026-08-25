@@ -1,6 +1,6 @@
 using TSS.Gateway.Sdk;
-using TSS.Play.Shared.Events;
-using TSS.Play.Shared.Requests;
+using TSS.Gateway.Sdk.Events;
+using TSS.Gateway.Sdk.Requests;
 
 // Example integration: connects to a TSS gateway, lists the player's stories, starts one,
 // queries the story status while it plays, and stops it again. Each step prints what happened,

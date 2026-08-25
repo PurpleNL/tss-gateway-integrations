@@ -14,9 +14,6 @@
 		<Description>Client SDK for the TSS gateway: publish requests, wait for events and run queries against a TSS player.</Description>
 		<RepositoryUrl>https://github.com/PurpleNL/tss-play</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<!-- The tss-play-shared assembly is baked into this package instead of becoming a package
-		     dependency, so its NuGet dependencies are declared here explicitly. -->
-		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeSharedAssembly</TargetsForTfmSpecificBuildOutput>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,24 +23,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
-		<PackageReference Include="Google.Protobuf" Version="3.29.3" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<!-- ProtoRoot makes imports resolve relative to the Protos folder itself, so the files
+		     also compile standalone with protoc -I on a case-sensitive filesystem. -->
+		<Protobuf Include="Protos\models.proto" GrpcServices="None" ProtoRoot="Protos" />
+		<Protobuf Include="Protos\events.proto" GrpcServices="None" ProtoRoot="Protos" />
+		<Protobuf Include="Protos\requests.proto" GrpcServices="None" ProtoRoot="Protos" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\tss-play-shared\tss-play-shared.csproj" PrivateAssets="all" />
+		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+		<PackageReference Include="Google.Protobuf" Version="3.29.3" />
+		<PackageReference Include="Grpc.Tools" Version="2.69.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
-
-	<Target Name="IncludeSharedAssembly">
-		<ItemGroup>
-			<BuildOutputInPackage Include="$(OutputPath)tss-play-shared.dll" />
-		</ItemGroup>
-	</Target>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
 		<Exec
