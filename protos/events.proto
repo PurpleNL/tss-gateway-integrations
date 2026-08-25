@@ -103,8 +103,8 @@ message InstanceHeartbeatEvent {
     string setupName = 4;
     int32 screenId = 5;
     string screenName = 6;
-    string ip = 7;
-    int32 apiPort = 8; // Port of the player's local HTTP API on that ip.
+    reserved 7, 8;
+    reserved "ip", "apiPort";
     int64 sentAt = 9; // Publish time as Unix milliseconds (UTC).
 }
 
