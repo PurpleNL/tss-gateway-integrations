@@ -40,7 +40,7 @@ An event is the player reporting a state change: a story started, a scene change
 | `asset.paused` | AssetEvent | The asset was paused |
 | `asset.muted` | AssetEvent | The asset was muted |
 | `asset.unmuted` | AssetEvent | The asset was unmuted |
-| `asset.volume-changed` | AssetVolumeChangeRequest (defined in [`requests.proto`](../protos/requests.proto)) | The asset's volume changed |
+| `asset.volume-changed` | AssetVolumeChangedEvent | The asset's volume changed |
 | `asset.seek-ended` | AssetProgressChangedEvent | A seek completed and actually changed the position, carries the new normalized progress |
 | `asset.page-changed` | AssetPageChangedEvent | A pdf asset's page changed |
 | `asset.content-changed` | AssetEvent | A text or image asset's content changed |
