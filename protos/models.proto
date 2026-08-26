@@ -119,6 +119,7 @@ message UrlData {
     optional bool streamActive = 8;
     repeated UrlRequest requests = 9; // Pending page interactions, see the url asset requests in requests.proto.
     optional bool isMuted = 10;
+    optional int32 zoom = 11; // Page zoom percentage applied as a reflowing Chromium zoom factor, 25-500. Absent or 0 means 100 (no zoom).
 }
 
 message VideoData {
