@@ -5,6 +5,13 @@ Protocol and documentation changes, per release. Maintained by hand, newest firs
 ## 2026-08-26
 
 - New event `instance.state-changed`, published on every playback state change and carrying the new state. The C# SDK exposes WaitForInstanceStateChangedAsync to wait for a specific state.
+- New events `screensaver.entered` and `screensaver.exited`, published when a scene change moves the player into or out of the screensaver scene.
+- New events `interaction.down`, `interaction.drag`, `interaction.longpress`, and `interaction.up`, reporting visitor touches with the pressed asset, position, and touch id.
+- New event `scene.changing`, published when a scene change starts, before the transition runs.
+- New events `asset.looped` (a looping video or sound wrapped around) and `asset.completed` (a non-looping video or sound reached its end and stopped).
+- `scene.changed` and `scene.changing` carry the cause of the change and the pressed asset or fired trigger that caused it.
+- `asset.shown` and `asset.hidden` carry the cause of the change the same way.
+- `story.started` and `story.stopped` carry the version of the story that is playing.
 
 ## 2026-08-24
 
