@@ -11,6 +11,7 @@ The gateway is the single integration point for anything that wants to talk to T
 | `protos/` | The protocol files (Protocol Buffers). The language-neutral contract, including reference documentation in the comments. |
 | `sdk/csharp/` | Source of the C# SDK, published as the `TSS.Gateway.Sdk` NuGet package. Includes an example integration under `examples/`. |
 | `docs/` | Integrator documentation, authored in this repository. |
+| `postman/` | Postman collection for firing requests and queries by hand, generated from the SDK source. |
 
 ## Documentation
 
@@ -30,6 +31,10 @@ C#:
 
 - [Getting started in C#](docs/csharp/getting-started.md) with the SDK.
 - [Example integration](sdk/csharp/examples/README.md): a complete commented walkthrough.
+
+No code:
+
+- [Postman collection](docs/postman.md): fire requests and queries straight from Postman.
 
 Also see the [changelog](docs/changelog.md) and [how to submit a feature request](docs/feature-requests.md).
 
