@@ -2,6 +2,10 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
+## 2026-08-26
+
+- New event `instance.state-changed`, published on every playback state change and carrying the new state. The C# SDK exposes WaitForInstanceStateChangedAsync to wait for a specific state.
+
 ## 2026-08-24
 
 - The C# SDK message types moved from the TSS.Play.Shared.* namespaces to TSS.Gateway.Sdk.Models, TSS.Gateway.Sdk.Events, and TSS.Gateway.Sdk.Requests. Breaking for SDK package consumers: update your using directives when upgrading.

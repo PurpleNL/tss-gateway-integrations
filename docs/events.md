@@ -53,3 +53,6 @@ An event is the player reporting a state change: a story started, a scene change
 | Topic and action | Payload message | Fired when |
 |---|---|---|
 | `instance.heartbeat` | InstanceHeartbeatEvent | Every second (deployment default) while the player runs, identifies the instance (setup, screen) |
+| `instance.state-changed` | InstanceStateChangedEvent | The player's playback state changed, carries the new state |
+
+The state is the same value the `story.status` [query](queries.md) returns: `NONE`, `STARTING`, `RUNNING`, `CLOSING`, `TRANSITIONING`, `PREPARING_TRANSITION`, or `ERROR`. `story.started` and `story.stopped` cover the transitions into `RUNNING` and out of it, `instance.state-changed` covers them all. After `story.stopped` the player is still unloading and ignores start requests until the state is back to `NONE`; wait for that state instead of guessing with a delay.
