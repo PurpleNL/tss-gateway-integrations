@@ -88,7 +88,7 @@ message AssetAnimatedRectEvent {
     optional float height = 6;
 }
 
-// Currently unpublished; asset.volume-changed carries AssetVolumeChangeRequest (requests.proto).
+// asset.volume-changed.
 message AssetVolumeChangedEvent {
     string uuid = 1;
     string integrationId = 2;
