@@ -16,7 +16,8 @@ message StoryEvent {
     string integrationId = 2;
 }
 
-// scene.changed: identifies the scene that became active and why it did.
+// scene.changed and scene.changing: the scene that became active (changed) or that the starting
+// transition leads to (changing), and why the scene change happened.
 message SceneEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -91,7 +92,7 @@ message AssetAnimatedRectEvent {
     optional float height = 6;
 }
 
-// asset.volume-changed.
+// Currently unpublished; asset.volume-changed carries AssetVolumeChangeRequest (requests.proto).
 message AssetVolumeChangedEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -126,6 +127,7 @@ enum StoryAction {
 
 enum SceneAction {
     CHANGED = 0;
+    CHANGING = 1; // Published when a scene change starts, before the transition runs.
 }
 
 // Why a scene change happened.

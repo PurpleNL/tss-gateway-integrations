@@ -60,6 +60,8 @@ namespace TSS.Gateway.Sdk
         // Scene
         public Task<SceneEvent> WaitForSceneChangedByIntegrationIdAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changed", SceneEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<SceneEvent> WaitForSceneChangingByIntegrationIdAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changing", SceneEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
+
         public Task<SceneEvent> WaitForSceneChangedByUuidAsync(string uuid, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changed", SceneEvent.Parser, msg => msg.Uuid == uuid, uuid, timeoutMs);
 
         // Asset
