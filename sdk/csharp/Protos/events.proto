@@ -26,12 +26,26 @@ message SceneEvent {
     string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
 }
 
-// Events that only identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
+// Events that identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
 // asset.muted, asset.unmuted, asset.content-changed, asset.looped (a looping video or sound wrapped
 // around), and asset.completed (a non-looping video or sound reached its end and stopped).
+// Only asset.shown and asset.hidden carry the cause fields.
 message AssetEvent {
     string uuid = 1;
     string integrationId = 2;
+    AssetChangeCause cause = 3;
+    string causeUuid = 4; // The pressed asset (onclick) or the fired trigger (trigger); empty for other causes.
+    string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
+
+    // Why an asset was shown or hidden. Nested in the message so the values can carry the same bare
+    // names as the SceneChangeCause values without clashing at file scope.
+    enum AssetChangeCause {
+        ASSET_CHANGE_CAUSE_UNSPECIFIED = 0;
+        CONTROL = 1; // A show or hide request sent by control.
+        REQUEST = 2; // The same requests from any other sender.
+        TRIGGER = 3; // A trigger.fire request whose actions showed or hid the asset.
+        ONCLICK = 4; // A press on an asset whose on-click actions showed or hid the asset.
+    }
 }
 
 // story.master-volume-changed: uuid/integrationId identify the story.
