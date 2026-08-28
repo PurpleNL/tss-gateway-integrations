@@ -98,6 +98,15 @@ namespace TSS.Gateway.Sdk
 
         public Task<AssetCroppedEvent> WaitForAssetCroppedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.cropped", AssetCroppedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        // Interaction
+        public Task<InteractionEvent> WaitForInteractionDownAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.down", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionDragAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.drag", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionLongpressAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.longpress", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionUpAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.up", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
         // Instance
         public Task<InstanceHeartbeatEvent> WaitForInstanceHeartbeatAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.heartbeat", InstanceHeartbeatEvent.Parser, timeoutMs: timeoutMs);
 

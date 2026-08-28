@@ -114,6 +114,19 @@ message AssetVolumeChangedEvent {
     float normalizedVolume = 3;
 }
 
+// interaction.down, interaction.drag, interaction.longpress, and interaction.up: a visitor touch on
+// the screen. A quick press publishes down and up; a drag publishes at most one drag event per 0.1
+// second per touch; a press held past the longpress threshold publishes longpress at that moment.
+// The uuid/integrationId identify the pressed asset and are empty for a touch on the background;
+// longpress only exists for presses on an asset. x/y are in pixels, origin at the bottom-left.
+message InteractionEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float x = 3;
+    float y = 4;
+    int32 touchId = 5; // Identifies the finger across its events for the duration of the touch.
+}
+
 // screensaver.entered and screensaver.exited: published when a scene change moves the player into or
 // out of the screensaver scene, alongside that scene changed event and with the same cause. The
 // uuid/integrationId identify the screensaver scene. No exited is published when the story stops.
@@ -142,11 +155,19 @@ enum Topic {
     ASSET = 2;
     INSTANCE = 3;
     SCREENSAVER = 4;
+    INTERACTION = 5;
 }
 
 enum ScreensaverAction {
     ENTERED = 0;
     EXITED = 1;
+}
+
+enum InteractionAction {
+    DOWN = 0;
+    DRAG = 1;
+    LONGPRESS = 2;
+    UP = 3;
 }
 
 enum StoryAction {
