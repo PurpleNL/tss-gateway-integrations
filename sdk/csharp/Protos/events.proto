@@ -99,6 +99,15 @@ message AssetVolumeChangedEvent {
     float normalizedVolume = 3;
 }
 
+// screensaver.entered and screensaver.exited: published when a scene change moves the player into or
+// out of the screensaver scene, alongside that scene changed event and with the same cause. The
+// uuid/integrationId identify the screensaver scene. No exited is published when the story stops.
+message ScreensaverEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    SceneChangeCause cause = 3;
+}
+
 // instance.heartbeat: identifies this player instance, published every second by default.
 message InstanceHeartbeatEvent {
     string app = 1; // The publishing application, "play" for the player.
@@ -117,6 +126,12 @@ enum Topic {
     SCENE = 1;
     ASSET = 2;
     INSTANCE = 3;
+    SCREENSAVER = 4;
+}
+
+enum ScreensaverAction {
+    ENTERED = 0;
+    EXITED = 1;
 }
 
 enum StoryAction {

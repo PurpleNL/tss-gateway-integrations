@@ -64,6 +64,11 @@ namespace TSS.Gateway.Sdk
 
         public Task<SceneEvent> WaitForSceneChangedByUuidAsync(string uuid, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changed", SceneEvent.Parser, msg => msg.Uuid == uuid, uuid, timeoutMs);
 
+        // Screensaver
+        public Task<ScreensaverEvent> WaitForScreensaverEnteredAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("screensaver.entered", ScreensaverEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<ScreensaverEvent> WaitForScreensaverExitedAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("screensaver.exited", ScreensaverEvent.Parser, timeoutMs: timeoutMs);
+
         // Asset
         public Task<AssetEvent> WaitForAssetShownAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.shown", integrationId, timeoutMs);
 
