@@ -60,7 +60,14 @@ namespace TSS.Gateway.Sdk
         // Scene
         public Task<SceneEvent> WaitForSceneChangedByIntegrationIdAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changed", SceneEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<SceneEvent> WaitForSceneChangingByIntegrationIdAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changing", SceneEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
+
         public Task<SceneEvent> WaitForSceneChangedByUuidAsync(string uuid, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("scene.changed", SceneEvent.Parser, msg => msg.Uuid == uuid, uuid, timeoutMs);
+
+        // Screensaver
+        public Task<ScreensaverEvent> WaitForScreensaverEnteredAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("screensaver.entered", ScreensaverEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<ScreensaverEvent> WaitForScreensaverExitedAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("screensaver.exited", ScreensaverEvent.Parser, timeoutMs: timeoutMs);
 
         // Asset
         public Task<AssetEvent> WaitForAssetShownAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.shown", integrationId, timeoutMs);
@@ -77,6 +84,10 @@ namespace TSS.Gateway.Sdk
 
         public Task<AssetVolumeChangedEvent> WaitForAssetVolumeChangedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.volume-changed", AssetVolumeChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<AssetEvent> WaitForAssetLoopedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.looped", integrationId, timeoutMs);
+
+        public Task<AssetEvent> WaitForAssetCompletedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.completed", integrationId, timeoutMs);
+
         public Task<AssetProgressChangedEvent> WaitForAssetSeekEndedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.seek-ended", AssetProgressChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
         public Task<AssetResizedEvent> WaitForAssetResizedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.resized", AssetResizedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
@@ -86,6 +97,15 @@ namespace TSS.Gateway.Sdk
         public Task<AssetMovedEvent> WaitForAssetMovedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.moved", AssetMovedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
         public Task<AssetCroppedEvent> WaitForAssetCroppedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.cropped", AssetCroppedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
+
+        // Interaction
+        public Task<InteractionEvent> WaitForInteractionDownAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.down", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionDragAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.drag", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionLongpressAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.longpress", InteractionEvent.Parser, timeoutMs: timeoutMs);
+
+        public Task<InteractionEvent> WaitForInteractionUpAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.up", InteractionEvent.Parser, timeoutMs: timeoutMs);
 
         // Instance
         public Task<InstanceHeartbeatEvent> WaitForInstanceHeartbeatAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.heartbeat", InstanceHeartbeatEvent.Parser, timeoutMs: timeoutMs);

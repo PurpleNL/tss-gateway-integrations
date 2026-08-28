@@ -10,23 +10,43 @@ option csharp_namespace = "TSS.Gateway.Sdk.Events";
 // Positions and sizes are in pixels on the screen's canvas, origin at the bottom-left, y up.
 // Volumes and progress are normalized: 0 to 1.
 
-// story.started and story.stopped: identifies the story.
+// story.started and story.stopped: identifies the story and the version that is playing.
 message StoryEvent {
     string uuid = 1;
     string integrationId = 2;
+    int32 version = 3;
 }
 
-// scene.changed: identifies the scene that became active.
+// scene.changed and scene.changing: the scene that became active (changed) or that the starting
+// transition leads to (changing), and why the scene change happened.
 message SceneEvent {
     string uuid = 1;
     string integrationId = 2;
+    SceneChangeCause cause = 3;
+    string causeUuid = 4; // The pressed asset (onclick) or the fired trigger (trigger); empty for other causes.
+    string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
 }
 
-// Events that only identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
-// asset.muted, asset.unmuted, and asset.content-changed.
+// Events that identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
+// asset.muted, asset.unmuted, asset.content-changed, asset.looped (a looping video or sound wrapped
+// around), and asset.completed (a non-looping video or sound reached its end and stopped).
+// Only asset.shown and asset.hidden carry the cause fields.
 message AssetEvent {
     string uuid = 1;
     string integrationId = 2;
+    AssetChangeCause cause = 3;
+    string causeUuid = 4; // The pressed asset (onclick) or the fired trigger (trigger); empty for other causes.
+    string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
+
+    // Why an asset was shown or hidden. Nested in the message so the values can carry the same bare
+    // names as the SceneChangeCause values without clashing at file scope.
+    enum AssetChangeCause {
+        ASSET_CHANGE_CAUSE_UNSPECIFIED = 0;
+        CONTROL = 1; // A show or hide request sent by control.
+        REQUEST = 2; // The same requests from any other sender.
+        TRIGGER = 3; // A trigger.fire request whose actions showed or hid the asset.
+        ONCLICK = 4; // A press on an asset whose on-click actions showed or hid the asset.
+    }
 }
 
 // story.master-volume-changed: uuid/integrationId identify the story.
@@ -88,11 +108,33 @@ message AssetAnimatedRectEvent {
     optional float height = 6;
 }
 
-// asset.volume-changed.
+// Currently unpublished; asset.volume-changed carries AssetVolumeChangeRequest (requests.proto).
 message AssetVolumeChangedEvent {
     string uuid = 1;
     string integrationId = 2;
     float normalizedVolume = 3;
+}
+
+// interaction.down, interaction.drag, interaction.longpress, and interaction.up: a visitor touch on
+// the screen. A quick press publishes down and up; a drag publishes at most one drag event per 0.1
+// second per touch; a press held past the longpress threshold publishes longpress at that moment.
+// The uuid/integrationId identify the pressed asset and are empty for a touch on the background;
+// longpress only exists for presses on an asset. x/y are in pixels, origin at the bottom-left.
+message InteractionEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    float x = 3;
+    float y = 4;
+    int32 touchId = 5; // Identifies the finger across its events for the duration of the touch.
+}
+
+// screensaver.entered and screensaver.exited: published when a scene change moves the player into or
+// out of the screensaver scene, alongside that scene changed event and with the same cause. The
+// uuid/integrationId identify the screensaver scene. No exited is published when the story stops.
+message ScreensaverEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    SceneChangeCause cause = 3;
 }
 
 // instance.heartbeat: identifies this player instance, published every second by default.
@@ -113,6 +155,20 @@ enum Topic {
     SCENE = 1;
     ASSET = 2;
     INSTANCE = 3;
+    SCREENSAVER = 4;
+    INTERACTION = 5;
+}
+
+enum ScreensaverAction {
+    ENTERED = 0;
+    EXITED = 1;
+}
+
+enum InteractionAction {
+    DOWN = 0;
+    DRAG = 1;
+    LONGPRESS = 2;
+    UP = 3;
 }
 
 enum StoryAction {
@@ -123,6 +179,19 @@ enum StoryAction {
 
 enum SceneAction {
     CHANGED = 0;
+    CHANGING = 1; // Published when a scene change starts, before the transition runs.
+}
+
+// Why a scene change happened.
+enum SceneChangeCause {
+    SCENE_CHANGE_CAUSE_UNSPECIFIED = 0;
+    CONTROL = 1; // A scene change, next, or previous request sent by control.
+    REQUEST = 2; // The same requests from any other sender.
+    TRIGGER = 3; // A trigger.fire request whose actions changed the scene.
+    ONCLICK = 4; // A press on an asset whose on-click actions changed the scene.
+    AUTOSWITCH = 5; // The background video ended and the scene advanced automatically.
+    TIMEOUT = 6; // The inactivity timeout activated the screensaver scene.
+    TOUCH = 7; // A press on the screensaver scene navigated back out of it.
 }
 
 enum InstanceAction {
@@ -143,4 +212,6 @@ enum AssetAction {
     SEEK_ENDED = 10;
     CROPPED = 11;
     VOLUME_CHANGED = 12;
+    LOOPED = 13;
+    COMPLETED = 14;
 }

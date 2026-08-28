@@ -18,6 +18,8 @@ message Story {
     repeated Trigger triggers = 9;
     string integrationId = 10;
     repeated Group groups = 11;
+    bool returnToLastSceneAfterScreensaver = 12; // True resumes at the scene that was active when the screensaver started; false restarts at the first scene.
+    optional string backgroundColor = 13; // Hex color string, for example "#FF8800".
 }
 
 // A set of assets that stays visible across the scenes named in inScenes.
@@ -119,6 +121,7 @@ message UrlData {
     optional bool streamActive = 8;
     repeated UrlRequest requests = 9; // Pending page interactions, see the url asset requests in requests.proto.
     optional bool isMuted = 10;
+    optional int32 zoom = 11; // Page zoom percentage applied as a reflowing Chromium zoom factor, 25-500. Absent or 0 means 100 (no zoom).
 }
 
 message VideoData {

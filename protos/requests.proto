@@ -214,6 +214,8 @@ message UrlAssetTouchRequest{
 message TriggerFireRequest {
 	string triggerUuid = 1;
 	optional bool state = 2; // For toggle actions: true forces show, false forces hide, absent toggles.
+	string sourceAssetUuid = 3; // The pressed asset when the player fires an on-click trigger; empty for other firers.
+	string sourceAssetIntegrationId = 4;
 }
 
 // Answer to instance.info.
