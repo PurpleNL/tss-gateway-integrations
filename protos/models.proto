@@ -18,7 +18,8 @@ message Story {
     repeated Trigger triggers = 9;
     string integrationId = 10;
     repeated Group groups = 11;
-    optional string backgroundColor = 12; // Hex color string, for example "#FF8800".
+    bool returnToLastSceneAfterScreensaver = 12; // True resumes at the scene that was active when the screensaver started; false restarts at the first scene.
+    optional string backgroundColor = 13; // Hex color string, for example "#FF8800".
 }
 
 // A set of assets that stays visible across the scenes named in inScenes.
