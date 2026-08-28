@@ -27,7 +27,8 @@ message SceneEvent {
 }
 
 // Events that only identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
-// asset.muted, asset.unmuted, and asset.content-changed.
+// asset.muted, asset.unmuted, asset.content-changed, asset.looped (a looping video or sound wrapped
+// around), and asset.completed (a non-looping video or sound reached its end and stopped).
 message AssetEvent {
     string uuid = 1;
     string integrationId = 2;
@@ -175,4 +176,6 @@ enum AssetAction {
     SEEK_ENDED = 10;
     CROPPED = 11;
     VOLUME_CHANGED = 12;
+    LOOPED = 13;
+    COMPLETED = 14;
 }

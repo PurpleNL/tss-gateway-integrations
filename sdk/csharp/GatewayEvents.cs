@@ -84,6 +84,10 @@ namespace TSS.Gateway.Sdk
 
         public Task<AssetVolumeChangedEvent> WaitForAssetVolumeChangedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.volume-changed", AssetVolumeChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<AssetEvent> WaitForAssetLoopedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.looped", integrationId, timeoutMs);
+
+        public Task<AssetEvent> WaitForAssetCompletedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.completed", integrationId, timeoutMs);
+
         public Task<AssetProgressChangedEvent> WaitForAssetSeekEndedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.seek-ended", AssetProgressChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
         public Task<AssetResizedEvent> WaitForAssetResizedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.resized", AssetResizedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
