@@ -10,10 +10,11 @@ option csharp_namespace = "TSS.Gateway.Sdk.Events";
 // Positions and sizes are in pixels on the screen's canvas, origin at the bottom-left, y up.
 // Volumes and progress are normalized: 0 to 1.
 
-// story.started and story.stopped: identifies the story.
+// story.started and story.stopped: identifies the story and the version that is playing.
 message StoryEvent {
     string uuid = 1;
     string integrationId = 2;
+    int32 version = 3;
 }
 
 // scene.changed and scene.changing: the scene that became active (changed) or that the starting
