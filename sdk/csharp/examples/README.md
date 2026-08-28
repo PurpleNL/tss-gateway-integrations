@@ -4,7 +4,7 @@ A minimal console application that shows the full request > player > event round
 
 1. Connect to the gateway.
 2. Query the stories that are available on the player and list them.
-3. Stop the story the player is currently running, if there is one, because the player ignores a start request while a story runs.
+3. Stop the story the player is currently running, if there is one, because the player ignores a start request while a story runs. The `instance.state-changed` event reports when the player is back to `None` and ready to start.
 4. Request the player to start a story and wait for the `story.started` event.
 5. Query the story status while it plays.
 6. Request the player to stop the story and wait for the `story.stopped` event.

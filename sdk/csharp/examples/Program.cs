@@ -54,17 +54,15 @@ StoryStatusResponse initialStatus = await client.Queries.GetStoryStatusAsync();
 
 if (initialStatus.Status != State.None)
 {
-    Task alreadyRunningStoppedTask = client.Events.WaitForStoryStoppedAsync(30000);
+    // The stopped event precedes the unload, and a start request during the unload is
+    // ignored, so wait for the state-changed event that reports the player is back to None.
+    Task alreadyRunningStoppedTask = client.Events.WaitForInstanceStateChangedAsync(State.None, 30000);
 
     await client.Requests.StopStoryAsync();
 
     Console.WriteLine($"The player was already running \"{initialStatus.StoryTitle}\", requested it to stop first, waiting...");
 
     await alreadyRunningStoppedTask;
-
-    // The stopped event precedes the unload, and a start request during the unload is
-    // ignored, so give the player a moment.
-    await Task.Delay(TimeSpan.FromSeconds(3));
 }
 
 string storyUuid = Arg("story", stories.Stories[0].Uuid);

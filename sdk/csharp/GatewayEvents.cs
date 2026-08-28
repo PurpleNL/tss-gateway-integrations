@@ -110,6 +110,8 @@ namespace TSS.Gateway.Sdk
         // Instance
         public Task<InstanceHeartbeatEvent> WaitForInstanceHeartbeatAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.heartbeat", InstanceHeartbeatEvent.Parser, timeoutMs: timeoutMs);
 
+        public Task<InstanceStateChangedEvent> WaitForInstanceStateChangedAsync(Requests.State state, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.state-changed", InstanceStateChangedEvent.Parser, msg => msg.State == state, state.ToString(), timeoutMs);
+
         public async Task<T> WaitForEventAsync<T>(string eventSuffix, MessageParser<T> parser, Func<T, bool>? predicate = null, string name = "", int timeoutMs = DefaultTimeoutMs) where T : IMessage<T>
         {
             TaskCompletionSource<T> tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);

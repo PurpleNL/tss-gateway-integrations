@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option csharp_namespace = "TSS.Gateway.Sdk.Events";
 
+import "requests.proto";
+
 // Payload messages for the events the player publishes on tss-events-publish (consumed from
 // tss-events-listen). The routing key names the topic and action, for example story.started;
 // the payload identifies the subject and carries the new value where there is one.
@@ -137,6 +139,12 @@ message ScreensaverEvent {
     SceneChangeCause cause = 3;
 }
 
+// instance.state-changed: published on every playback state change, carrying the new state. The
+// state is the same value the story.status query returns (State in requests.proto).
+message InstanceStateChangedEvent {
+    State state = 1;
+}
+
 // instance.heartbeat: identifies this player instance, published every second by default.
 message InstanceHeartbeatEvent {
     string app = 1; // The publishing application, "play" for the player.
@@ -196,6 +204,7 @@ enum SceneChangeCause {
 
 enum InstanceAction {
     HEARTBEAT = 0;
+    STATE_CHANGED = 1;
 }
 
 enum AssetAction {
