@@ -135,6 +135,7 @@ message VideoData {
     repeated FileData files = 9;
     optional bool isLoaded = 10;
     optional bool isMuted = 11;
+    optional bool hideOnFinish = 12; // True hides the asset the moment playback finishes. Absent or false keeps the finished video on screen.
 }
 
 message TextData {
