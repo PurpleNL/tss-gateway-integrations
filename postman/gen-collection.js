@@ -67,6 +67,18 @@ const assetPayloadExtras = {
   'asset.page': ', "page": 1',
   'asset.move': ', "left": 0, "bottom": 0',
   'asset.crop': ', "left": 0, "top": 0, "right": 0, "bottom": 0',
+  'asset.back': '',
+  'asset.forward': '',
+  'asset.home': '',
+  'asset.refresh': '',
+  'asset.stream-on': '',
+  'asset.stream-off': '',
+  'asset.navigation-on': '',
+  'asset.navigation-off': '',
+  'asset.keyboard-on': '',
+  'asset.keyboard-off': '',
+  'asset.input': ', "key": "a"',
+  'asset.touch': ', "touch": {"type": 0, "x": 0.5, "y": 0.5, "touchId": 0}',
 };
 
 // Example payloads for the other commands.
