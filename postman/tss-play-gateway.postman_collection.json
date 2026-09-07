@@ -618,6 +618,366 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "asset.back",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.back\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.forward",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.forward\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.home",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.home\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.refresh\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-on\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-off\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.navigation-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.navigation-on\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.navigation-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.navigation-off\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.keyboard-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.keyboard-on\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.keyboard-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.keyboard-off\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.input",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.input\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\", \\\"key\\\": \\\"a\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.touch",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.touch\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\", \\\"touch\\\": {\\\"type\\\": 0, \\\"x\\\": 0.5, \\\"y\\\": 0.5, \\\"touchId\\\": 0}}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -993,6 +1353,366 @@
             "body": {
               "mode": "raw",
               "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.crop\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"left\\\": 0, \\\"top\\\": 0, \\\"right\\\": 0, \\\"bottom\\\": 0}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.back",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.back\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.forward",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.forward\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.home",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.home\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.refresh\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-on\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-off\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.navigation-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.navigation-on\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.navigation-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.navigation-off\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.keyboard-on",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.keyboard-on\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.keyboard-off",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.keyboard-off\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.input",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.input\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"key\\\": \\\"a\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.touch",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.touch\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"touch\\\": {\\\"type\\\": 0, \\\"x\\\": 0.5, \\\"y\\\": 0.5, \\\"touchId\\\": 0}}\",\n    \"payload_encoding\": \"string\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
