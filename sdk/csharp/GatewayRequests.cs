@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using RabbitMQ.Client;
+using TSS.Gateway.Sdk.Models;
 using TSS.Gateway.Sdk.Requests;
 
 // ReSharper disable UnusedMember.Global
@@ -122,6 +123,32 @@ namespace TSS.Gateway.Sdk
 
             return RequestAsync("asset", "crop", request, scope);
         }
+
+        // Url asset
+        public Task GoBackUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task GoForwardUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "forward", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task GoHomeUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "home", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task RefreshUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "refresh", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task SendUrlAssetInputAsync(string integrationId, string key, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "input", new UrlAssetInputRequest {IntegrationId = integrationId, Key = key}, scope);
+
+        public Task SendUrlAssetTouchAsync(string integrationId, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "touch", new UrlAssetTouchRequest {IntegrationId = integrationId, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
 
         // Trigger
         public Task FireTriggerAsync(string triggerUuid, bool? state = null, RequestScope scope = RequestScope.Screen)
