@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<RootNamespace>TSS.Gateway.Sdk</RootNamespace>
+		<Version>1.0.0</Version>
+		<DebugType>embedded</DebugType>
+		<LangVersion>8.0</LangVersion>
+		<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+		<PackageId>TSS.Gateway.Sdk</PackageId>
+		<Authors>Storytelling Company</Authors>
+		<Description>Client SDK for the TSS gateway: publish requests, wait for events and run queries against a TSS player.</Description>
+		<RepositoryUrl>https://github.com/PurpleNL/tss-play</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- The example integration is its own project; without this the SDK would compile its
+		     sources into the package assembly. -->
+		<Compile Remove="examples/**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- ProtoRoot makes imports resolve relative to the Protos folder itself, so the files
+		     also compile standalone with protoc -I on a case-sensitive filesystem. -->
+		<Protobuf Include="Protos\models.proto" GrpcServices="None" ProtoRoot="Protos" />
+		<Protobuf Include="Protos\events.proto" GrpcServices="None" ProtoRoot="Protos" />
+		<Protobuf Include="Protos\requests.proto" GrpcServices="None" ProtoRoot="Protos" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+		<PackageReference Include="Google.Protobuf" Version="3.29.3" />
+		<PackageReference Include="Grpc.Tools" Version="2.69.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
+		<Exec
+			Command="if exist &quot;$(TargetDir)..\netstandard2.1\$(TargetName).dll&quot; (&#xA;  xcopy &quot;$(TargetDir)..\netstandard2.1\$(TargetName).dll&quot; &quot;$(ProjectDir)..\tss-play-unity\Assets\Plugins\&quot; /Y&#xA;)" />
+	</Target>
+
+</Project>

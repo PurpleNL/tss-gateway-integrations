@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>TSS.Gateway.Sdk.Example</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- A real integration references the TSS.Gateway.Sdk NuGet package instead of this
+		     project. -->
+		<ProjectReference Include="..\tss-gateway-sdk.csproj" />
+	</ItemGroup>
+
+</Project>

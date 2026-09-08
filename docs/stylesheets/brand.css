@@ -1,0 +1,17 @@
+/* Give the content column more room between the two sidebars. */
+.md-grid {
+  max-width: 80rem;
+}
+
+:root {
+  --md-primary-fg-color: #004bff;
+  --md-primary-fg-color--light: #4d84ff;
+  --md-primary-fg-color--dark: #0039c2;
+  --md-accent-fg-color: #0039c2;
+}
+
+/* The primary blue is too dark to read on the slate background. */
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #7ba3ff;
+  --md-accent-fg-color: #b2cbff;
+}
