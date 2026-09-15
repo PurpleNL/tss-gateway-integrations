@@ -2,6 +2,11 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
+## 2026-09-15
+
+- New request `asset.change-url`, which loads another page in a url asset for the rest of the scene. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again.
+- New event `asset.url-changed`, published whenever the page a url asset shows changes, carrying the page that loaded. Besides `asset.change-url` it also covers `asset.back`, `asset.forward` and `asset.home`, the navigation panel, and a visitor following a link.
+
 ## 2026-08-26
 
 - New event `instance.state-changed`, published on every playback state change and carrying the new state. The C# SDK exposes WaitForInstanceStateChangedAsync to wait for a specific state.
