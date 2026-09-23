@@ -76,7 +76,7 @@ Url assets show a web page. These requests also require a running story and the 
 | `asset.navigation-on` / `asset.navigation-off` | AssetRequest | Enables or disables the navigation panel | | none |
 | `asset.stream-on` / `asset.stream-off` | AssetRequest | Enables or disables streaming for the page | | none |
 
-`asset.change-url` changes the page for the rest of the scene, not for the story. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again. A url asset in a group is never unloaded, so it keeps the requested page until the story stops. The player loads `http`, `https`, `file` and `streaming-assets` urls.
+`asset.change-url` changes the page for the rest of the scene, not for the story. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again. A url asset in a group is never unloaded, so it keeps the requested page until the story stops. The player loads `http` and `https` urls.
 
 A page a visitor navigates to themselves raises `asset.url-changed` as well, so an integration that only wants to see its own changes should match the url it requested.
 
