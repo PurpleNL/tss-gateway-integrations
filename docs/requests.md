@@ -17,6 +17,8 @@ The payload messages are defined in [`requests.proto`](../protos/requests.proto)
 
 Assets and scenes are addressed by their integration id or their uuid, the payload messages accept either. One integration id can match more than one asset, in which case the request applies to each match and each match reports its own event.
 
+A scene can also be addressed by its `sceneIndex`, which works on every story without an authoring convention. The screensaver scene is index 0, the other scenes count from 1 in story order, skipping the screensaver. Without a screensaver scene the count still starts at 1, so index 1 is always the first regular scene. The index of every scene is in the scene model (`story.data`, `scene.status`).
+
 ## Story
 
 | Topic and action | Payload message | Description | Prerequisites | Confirmed by |
@@ -31,7 +33,7 @@ All scene requests require a running story.
 
 | Topic and action | Payload message | Description | Prerequisites | Confirmed by |
 |---|---|---|---|---|
-| `scene.change` | SceneChangeRequest | Changes to the requested scene | Scene exists, scene is not the active scene | `scene.changed` |
+| `scene.change` | SceneChangeRequest | Changes to the requested scene, addressed by uuid, integrationId, or sceneIndex | Scene exists (index 0 requires a screensaver scene), scene is not the active scene | `scene.changed` |
 | `scene.next` | none | Goes to the next non-screensaver scene | Story has more than one scene | `scene.changed` |
 | `scene.previous` | none | Goes to the previous non-screensaver scene | Story has more than one scene | `scene.changed` |
 | `scene.skip-transition` | none | Skips the running transition | A transition is running | none (the interrupted change still reports `scene.changed`) |
