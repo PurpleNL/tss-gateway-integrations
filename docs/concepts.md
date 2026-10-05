@@ -31,6 +31,14 @@ Every version of the TSS player has a matching tag in this repository, so the pr
 - Integrate against the `stable` branch and pin the release tag that matches your player version, for example `4.1.0`.
 - The `latest` branch follows ongoing development and can change ahead of your player. Use it to preview, not to build against.
 
+## Compatibility
+
+We aim to keep the protocol and the C# SDK backward compatible.
+
+- Within a major version, for example all 4.x releases, a client built against an older tag keeps working when the player updates. We aim to support this at all times.
+- Breaking changes are announced in the release notes that come with every release, and in the [changelog](changelog.md).
+- A client built against a newer tag than your player is not supported. Pin the tag that matches your player version.
+
 ## Where the reference detail lives
 
 - Message payloads and their fields: the comments in the [proto files](../protos/).
