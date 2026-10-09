@@ -50,7 +50,7 @@ message StoryStatusResponse {
 // Answer to story.available-stories.
 message AvailableStoriesResponse {
 	repeated AvailableStory stories = 1;
-	int32 count = 2; // Number of entries in stories, after search/offset/limit were applied.
+	int32 count = 2; // Number of stories matching the search, before offset and limit are applied; the total to page through.
 }
 
 // One story that is synced to this player. Also the answer to story.available-story.
@@ -275,7 +275,7 @@ enum CorruptedAssetType
 message AvailableStoriesRequest {
 	SortDirection sortDir = 1;
 	StorySortBy sortBy = 2;
-	string search = 3; // Filters on the story name.
+	string search = 3; // Filters on the story name, description and author, tolerating typos and partial words; "quoted text" matches as a phrase. Empty returns every story.
 	int32 offset = 4;
 	int32 limit = 5; // Maximum number of stories returned. The protobuf default of 0 returns none, so always set it.
 }
