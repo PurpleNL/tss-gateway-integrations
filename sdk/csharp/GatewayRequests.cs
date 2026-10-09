@@ -66,6 +66,8 @@ namespace TSS.Gateway.Sdk
 
         public Task ChangeSceneByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "change", new SceneChangeRequest {Uuid = uuid}, scope);
 
+        public Task ChangeSceneByIndexAsync(int sceneIndex, RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "change", new SceneChangeRequest {SceneIndex = sceneIndex}, scope);
+
         public Task SkipTransitionAsync(RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "skip-transition", new Empty(), scope);
 
         public Task NextSceneAsync(RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "next", new Empty(), scope);

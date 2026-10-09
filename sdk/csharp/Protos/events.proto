@@ -27,6 +27,7 @@ message SceneEvent {
     SceneChangeCause cause = 3;
     string causeUuid = 4; // The pressed asset (onclick) or the fired trigger (trigger); empty for other causes.
     string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
+    int32 sceneIndex = 6; // The scene's index, see Scene in models.proto for the numbering.
 }
 
 // Events that identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,

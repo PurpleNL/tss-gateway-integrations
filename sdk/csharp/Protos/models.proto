@@ -47,6 +47,7 @@ message Scene {
     };
     string integrationId = 7;
     Thumbnails thumbnails = 8;
+    int32 sceneIndex = 9; // The screensaver scene is 0, the other scenes count from 1 in story order, skipping the screensaver. Without a screensaver the count still starts at 1.
 }
 
 // A transition rendered by story-authored assets instead of a built-in effect.

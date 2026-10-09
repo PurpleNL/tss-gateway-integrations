@@ -97,10 +97,13 @@ message CurrentStateResponse {
 	float volume = 4; // Master volume, 0 to 1.
 }
 
+// Addresses the scene by uuid, integrationId, or sceneIndex. The screensaver scene is index 0, the
+// other scenes count from 1 in story order; index 0 is an error when the story has no screensaver.
 message SceneChangeRequest {
 	oneof scene {
 		string uuid = 1;
 		string integrationId = 2;
+		int32 sceneIndex = 3;
 	}
 }
 
