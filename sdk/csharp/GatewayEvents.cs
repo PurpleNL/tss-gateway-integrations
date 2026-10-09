@@ -7,6 +7,7 @@ using Google.Protobuf;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using TSS.Gateway.Sdk.Events;
+using TSS.Gateway.Sdk.Requests;
 
 // ReSharper disable UnusedMember.Global
 
@@ -84,6 +85,8 @@ namespace TSS.Gateway.Sdk
 
         public Task<AssetVolumeChangedEvent> WaitForAssetVolumeChangedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.volume-changed", AssetVolumeChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<AssetEvent> WaitForAssetContentChangedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.content-changed", integrationId, timeoutMs);
+
         public Task<AssetEvent> WaitForAssetLoopedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.looped", integrationId, timeoutMs);
 
         public Task<AssetEvent> WaitForAssetCompletedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForAssetEventAsync("asset.completed", integrationId, timeoutMs);
@@ -110,7 +113,7 @@ namespace TSS.Gateway.Sdk
         // Instance
         public Task<InstanceHeartbeatEvent> WaitForInstanceHeartbeatAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.heartbeat", InstanceHeartbeatEvent.Parser, timeoutMs: timeoutMs);
 
-        public Task<InstanceStateChangedEvent> WaitForInstanceStateChangedAsync(Requests.State state, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.state-changed", InstanceStateChangedEvent.Parser, msg => msg.State == state, state.ToString(), timeoutMs);
+        public Task<InstanceStateChangedEvent> WaitForInstanceStateChangedAsync(State state, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("instance.state-changed", InstanceStateChangedEvent.Parser, msg => msg.State == state, state.ToString(), timeoutMs);
 
         public async Task<T> WaitForEventAsync<T>(string eventSuffix, MessageParser<T> parser, Func<T, bool>? predicate = null, string name = "", int timeoutMs = DefaultTimeoutMs) where T : IMessage<T>
         {

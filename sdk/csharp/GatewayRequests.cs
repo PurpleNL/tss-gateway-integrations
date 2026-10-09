@@ -150,6 +150,9 @@ namespace TSS.Gateway.Sdk
         public Task SendUrlAssetTouchAsync(string integrationId, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
             RequestAsync("asset", "touch", new UrlAssetTouchRequest {IntegrationId = integrationId, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
 
+        public Task ChangeAssetContentAsync(string integrationId, string content, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "content", new AssetContentChangeRequest {IntegrationId = integrationId, Content = content}, scope);
+
         // Trigger
         public Task FireTriggerAsync(string triggerUuid, bool? state = null, RequestScope scope = RequestScope.Screen)
         {
