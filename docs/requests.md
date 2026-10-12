@@ -61,19 +61,24 @@ All asset requests require a running story, an existing asset, and except for `a
 
 ## Url asset
 
-Url assets show a web page. These requests also require a running story and the asset in the active scene. None of them produce an event.
+Url assets show a web page. These requests also require a running story and the asset in the active scene. Every request that lands on a different page is confirmed by `asset.url-changed`.
 
-| Topic and action | Payload message | Description |
-|---|---|---|
-| `asset.back` | AssetRequest | Goes one page back |
-| `asset.forward` | AssetRequest | Goes one page forward |
-| `asset.refresh` | AssetRequest | Refreshes the page |
-| `asset.home` | AssetRequest | Loads the original url again |
-| `asset.touch` | UrlAssetTouchRequest | Simulates a touch on the page |
-| `asset.input` | UrlAssetInputRequest | Simulates keyboard input on the page |
-| `asset.keyboard-on` / `asset.keyboard-off` | AssetRequest | Enables or disables the on-screen keyboard |
-| `asset.navigation-on` / `asset.navigation-off` | AssetRequest | Enables or disables the navigation panel |
-| `asset.stream-on` / `asset.stream-off` | AssetRequest | Enables or disables streaming for the page |
+| Topic and action | Payload message | Description | Prerequisites | Confirmed by |
+|---|---|---|---|---|
+| `asset.back` | AssetRequest | Goes one page back | Page has history to go back to | `asset.url-changed` |
+| `asset.forward` | AssetRequest | Goes one page forward | Page has history to go forward to | `asset.url-changed` |
+| `asset.refresh` | AssetRequest | Refreshes the page | | none, the page does not change |
+| `asset.home` | AssetRequest | Loads the original url again | Page is not already the original url | `asset.url-changed` |
+| `asset.change-url` | AssetUrlChangeRequest | Loads another page | Url the player can load, differs from the page currently loaded | `asset.url-changed` |
+| `asset.touch` | UrlAssetTouchRequest | Simulates a touch on the page | | none |
+| `asset.input` | UrlAssetInputRequest | Simulates keyboard input on the page | | none |
+| `asset.keyboard-on` / `asset.keyboard-off` | AssetRequest | Enables or disables the on-screen keyboard | | none |
+| `asset.navigation-on` / `asset.navigation-off` | AssetRequest | Enables or disables the navigation panel | | none |
+| `asset.stream-on` / `asset.stream-off` | AssetRequest | Enables or disables streaming for the page | | none |
+
+`asset.change-url` changes the page for the rest of the scene, not for the story. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again. A url asset in a group is never unloaded, so it keeps the requested page until the story stops. The player loads `http` and `https` urls.
+
+A page a visitor navigates to themselves raises `asset.url-changed` as well, so an integration that only wants to see its own changes should match the url it requested.
 
 ## Trigger
 

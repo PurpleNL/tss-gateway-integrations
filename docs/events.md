@@ -52,6 +52,9 @@ Both carry the cause of the change: `CONTROL` (a request sent by control), `REQU
 | `asset.cropped` | AssetCroppedEvent | The asset's crop meaningfully changed, carries the applied margins (a minimal change reports `asset.resized` instead) |
 | `asset.looped` | AssetEvent | A looping video or sound wrapped around |
 | `asset.completed` | AssetEvent | A non-looping video or sound reached its end and stopped |
+| `asset.url-changed` | AssetUrlChangedEvent | The page a url asset shows changed, carries the page that loaded |
+
+`asset.url-changed` reports every page change, whatever caused it: an `asset.change-url` request, `asset.back`, `asset.forward` or `asset.home`, the navigation panel, or a visitor following a link on the page. `asset.refresh` does not raise it, because the page stays the same. When a url redirects, the event carries the page that actually loaded, not the one that was requested.
 
 ## Screensaver
 
