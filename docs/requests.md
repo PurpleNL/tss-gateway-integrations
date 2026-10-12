@@ -52,7 +52,7 @@ All asset requests require a running story, an existing asset, and except for `a
 | `asset.seek` | AssetSeekRequest | Seeks to a normalized progress | Video or sound asset, visible | `asset.seek-ended` |
 | `asset.page` | AssetPageChangeRequest | Goes to the requested page | Pdf asset, visible, page in range | `asset.page-changed` |
 | `asset.move` | AssetMoveRequest | Moves the asset | Draggable asset, visible | `asset.moved` |
-| `asset.resize` | AssetResizeRequest | Resizes and/or repositions the asset | Draggable asset, visible | `asset.resized` |
+| `asset.resize` | AssetResizeRequest | Resizes and/or repositions the asset | Draggable asset, visible, not enlarged | `asset.resized` |
 | `asset.animate-rect` | AssetAnimateRectRequest | Animates the asset's size and position | Asset is visible, not enlarged | `asset.resized` and/or `asset.moved` |
 | `asset.enlarge` | AssetRequest | Enlarges the asset and shrinks other enlarged assets | Asset is visible, not already enlarged | `asset.resized` |
 | `asset.shrink` | AssetRequest | Shrinks the asset if enlarged | Asset is visible, enlarged | `asset.resized` |
