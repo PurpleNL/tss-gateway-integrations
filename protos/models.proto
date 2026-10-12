@@ -195,6 +195,7 @@ message UrlRequest{
         NavigationType navigation = 1;
         string key = 2;
         UrlTouch touch = 3;
+        string url = 5; // Page to load, see the asset.change-url request in requests.proto.
     }
     optional bool internal = 4;
 }

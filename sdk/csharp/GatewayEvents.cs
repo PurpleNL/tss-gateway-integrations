@@ -101,6 +101,8 @@ namespace TSS.Gateway.Sdk
 
         public Task<AssetCroppedEvent> WaitForAssetCroppedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.cropped", AssetCroppedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
 
+        public Task<AssetUrlChangedEvent> WaitForAssetUrlChangedAsync(string integrationId, int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("asset.url-changed", AssetUrlChangedEvent.Parser, msg => msg.IntegrationId == integrationId, integrationId, timeoutMs);
+
         // Interaction
         public Task<InteractionEvent> WaitForInteractionDownAsync(int timeoutMs = DefaultTimeoutMs) => WaitForEventAsync("interaction.down", InteractionEvent.Parser, timeoutMs: timeoutMs);
 

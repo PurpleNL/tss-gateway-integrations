@@ -214,6 +214,16 @@ message UrlAssetTouchRequest{
 	UrlTouch touch = 3;
 }
 
+// Loads another page in a url asset for the rest of the scene. The authored url stays the asset's
+// home, so back and home still return to it, and leaving the scene restores it.
+message AssetUrlChangeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	string url = 3; // Rejected when it is not a http or https url, or when it is the page already loaded.
+}
+
 message TriggerFireRequest {
 	string triggerUuid = 1;
 	optional bool state = 2; // For toggle actions: true forces show, false forces hide, absent toggles.
