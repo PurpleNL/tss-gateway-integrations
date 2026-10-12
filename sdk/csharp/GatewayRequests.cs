@@ -126,6 +126,33 @@ namespace TSS.Gateway.Sdk
             return RequestAsync("asset", "crop", request, scope);
         }
 
+        public Task ResizeAssetAsync(string integrationId, float? left = null, float? bottom = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen)
+        {
+            AssetResizeRequest request = new AssetResizeRequest {IntegrationId = integrationId};
+
+            if (left.HasValue)
+            {
+                request.Left = left.Value;
+            }
+
+            if (bottom.HasValue)
+            {
+                request.Bottom = bottom.Value;
+            }
+
+            if (width.HasValue)
+            {
+                request.Width = width.Value;
+            }
+
+            if (height.HasValue)
+            {
+                request.Height = height.Value;
+            }
+
+            return RequestAsync("asset", "resize", request, scope);
+        }
+
         // Url asset
         public Task GoBackUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {IntegrationId = integrationId}, scope);
 
