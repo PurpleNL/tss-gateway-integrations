@@ -2,6 +2,11 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
+## 2026-09-25
+
+- `scene.change` accepts `sceneIndex` as a third way to address the scene, next to `uuid` and `integrationId`. The screensaver scene is index 0, the other scenes count from 1 in story order, skipping the screensaver. The C# SDK exposes ChangeSceneByIndexAsync.
+- The Scene model carries `sceneIndex`, visible in `story.data` and `scene.status`, and `scene.changing` and `scene.changed` carry the `sceneIndex` of the scene they identify.
+
 ## 2026-09-15
 
 - New request `asset.change-url`, which loads another page in a url asset for the rest of the scene. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again.

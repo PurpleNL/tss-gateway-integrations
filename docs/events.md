@@ -31,7 +31,7 @@ An event is the player reporting a state change: a story started, a scene change
 | `scene.changing` | SceneEvent | A scene change started, before the transition runs, identifies the scene the transition leads to |
 | `scene.changed` | SceneEvent | The scene finished changing |
 
-Both carry the cause of the change: `CONTROL` (a request sent by control), `REQUEST` (the same requests from any other sender), `TRIGGER`, `ONCLICK`, `AUTOSWITCH` (the background video ended and the scene advanced automatically), `TIMEOUT` (the inactivity timeout activated the screensaver scene), or `TOUCH` (a press on the screensaver scene navigated back out of it). For `ONCLICK` and `TRIGGER`, `causeUuid` names the pressed asset or the fired trigger.
+Both carry the `sceneIndex` of the scene they identify (the screensaver scene is 0, the other scenes count from 1 in story order, see [Addressing assets and scenes](requests.md#addressing-assets-and-scenes)) and the cause of the change: `CONTROL` (a request sent by control), `REQUEST` (the same requests from any other sender), `TRIGGER`, `ONCLICK`, `AUTOSWITCH` (the background video ended and the scene advanced automatically), `TIMEOUT` (the inactivity timeout activated the screensaver scene), or `TOUCH` (a press on the screensaver scene navigated back out of it). For `ONCLICK` and `TRIGGER`, `causeUuid` names the pressed asset or the fired trigger.
 
 ## Asset
 

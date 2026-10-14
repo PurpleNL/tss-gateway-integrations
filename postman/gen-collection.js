@@ -199,7 +199,7 @@ var MSG = {
     Story: { 1: 'uuid:s', 2: 'title:s', 3: 'version:i', 4: 'activeSceneUuid:s', 5: 'volume:f', 6: 'screensaver:Screensaver', 7: 'scenes:*Scene', 8: 'assets:*Asset', 9: 'triggers:*Trigger', 10: 'integrationId:s', 11: 'groups:*Group' },
     Group: { 1: 'uuid:s', 2: 'name:s', 3: 'baseLayer:i', 4: 'inScenes:*s', 5: 'assets:*s' },
     Screensaver: { 1: 'uuid:s', 2: 'delay:i' },
-    Scene: { 1: 'uuid:s', 2: 'title:s', 3: 'autoSwitch:b', 4: 'assets:*s', 5: 'effectTransition:EffectTransition', 6: 'customTransition:CustomTransition', 7: 'integrationId:s', 8: 'thumbnails:Thumbnails' },
+    Scene: { 1: 'uuid:s', 2: 'title:s', 3: 'autoSwitch:b', 4: 'assets:*s', 5: 'effectTransition:EffectTransition', 6: 'customTransition:CustomTransition', 7: 'integrationId:s', 8: 'thumbnails:Thumbnails', 9: 'sceneIndex:i' },
     CustomTransition: { 1: 'duration:i', 2: 'assets:*s' },
     EffectTransition: { 1: 'effectType:E.EffectType', 2: 'duration:i', 3: 'easeType:E.EaseType', 4: 'feather:f', 5: 'playPerSegment:b' },
     Thumbnails: { 1: 'default:s', 2: 'large:s' },
