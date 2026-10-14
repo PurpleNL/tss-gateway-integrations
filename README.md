@@ -45,6 +45,8 @@ Every version of the TSS player has a matching tag in this repository, so the pr
 - The `stable` branch follows TSS Play releases. Release tags look like `4.1.0`. Pin one of these.
 - The `latest` branch follows ongoing development. Development tags look like `4.0.8-ef8b351e`.
 
+See [Compatibility](docs/concepts.md#compatibility) for what a pinned tag guarantees when the player updates.
+
 ## Read-only mirror
 
 The synced content in this repository is maintained in the TSS Play repository and pushed here automatically. Pull requests can therefore not be accepted; the next sync would overwrite them. For questions, problems, or change requests, contact TSC support.

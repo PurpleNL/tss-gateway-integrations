@@ -50,7 +50,7 @@ message StoryStatusResponse {
 // Answer to story.available-stories.
 message AvailableStoriesResponse {
 	repeated AvailableStory stories = 1;
-	int32 count = 2; // Number of entries in stories, after search/offset/limit were applied.
+	int32 count = 2; // Number of stories matching the search, before offset and limit are applied; the total to page through.
 }
 
 // One story that is synced to this player. Also the answer to story.available-story.
@@ -97,10 +97,13 @@ message CurrentStateResponse {
 	float volume = 4; // Master volume, 0 to 1.
 }
 
+// Addresses the scene by uuid, integrationId, or sceneIndex. The screensaver scene is index 0, the
+// other scenes count from 1 in story order; index 0 is an error when the story has no screensaver.
 message SceneChangeRequest {
 	oneof scene {
 		string uuid = 1;
 		string integrationId = 2;
+		int32 sceneIndex = 3;
 	}
 }
 
@@ -211,6 +214,16 @@ message UrlAssetTouchRequest{
 	UrlTouch touch = 3;
 }
 
+// Loads another page in a url asset for the rest of the scene. The authored url stays the asset's
+// home, so back and home still return to it, and leaving the scene restores it.
+message AssetUrlChangeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	string url = 3; // Rejected when it is not a http or https url, or when it is the page already loaded.
+}
+
 message TriggerFireRequest {
 	string triggerUuid = 1;
 	optional bool state = 2; // For toggle actions: true forces show, false forces hide, absent toggles.
@@ -275,7 +288,7 @@ enum CorruptedAssetType
 message AvailableStoriesRequest {
 	SortDirection sortDir = 1;
 	StorySortBy sortBy = 2;
-	string search = 3; // Filters on the story name.
+	string search = 3; // Filters on the story name, description and author, tolerating typos and partial words; "quoted text" matches as a phrase. Empty returns every story.
 	int32 offset = 4;
 	int32 limit = 5; // Maximum number of stories returned. The protobuf default of 0 returns none, so always set it.
 }

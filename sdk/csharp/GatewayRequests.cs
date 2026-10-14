@@ -66,6 +66,8 @@ namespace TSS.Gateway.Sdk
 
         public Task ChangeSceneByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "change", new SceneChangeRequest {Uuid = uuid}, scope);
 
+        public Task ChangeSceneByIndexAsync(int sceneIndex, RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "change", new SceneChangeRequest {SceneIndex = sceneIndex}, scope);
+
         public Task SkipTransitionAsync(RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "skip-transition", new Empty(), scope);
 
         public Task NextSceneAsync(RequestScope scope = RequestScope.Screen) => RequestAsync("scene", "next", new Empty(), scope);
@@ -124,6 +126,33 @@ namespace TSS.Gateway.Sdk
             return RequestAsync("asset", "crop", request, scope);
         }
 
+        public Task ResizeAssetAsync(string integrationId, float? left = null, float? bottom = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen)
+        {
+            AssetResizeRequest request = new AssetResizeRequest {IntegrationId = integrationId};
+
+            if (left.HasValue)
+            {
+                request.Left = left.Value;
+            }
+
+            if (bottom.HasValue)
+            {
+                request.Bottom = bottom.Value;
+            }
+
+            if (width.HasValue)
+            {
+                request.Width = width.Value;
+            }
+
+            if (height.HasValue)
+            {
+                request.Height = height.Value;
+            }
+
+            return RequestAsync("asset", "resize", request, scope);
+        }
+
         // Url asset
         public Task GoBackUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {IntegrationId = integrationId}, scope);
 
@@ -149,6 +178,12 @@ namespace TSS.Gateway.Sdk
 
         public Task SendUrlAssetTouchAsync(string integrationId, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
             RequestAsync("asset", "touch", new UrlAssetTouchRequest {IntegrationId = integrationId, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
+
+        public Task ChangeUrlAssetUrlAsync(string integrationId, string url, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "change-url", new AssetUrlChangeRequest {IntegrationId = integrationId, Url = url}, scope);
+
+        public Task ChangeAssetContentAsync(string integrationId, string content, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "content", new AssetContentChangeRequest {IntegrationId = integrationId, Content = content}, scope);
 
         // Trigger
         public Task FireTriggerAsync(string triggerUuid, bool? state = null, RequestScope scope = RequestScope.Screen)
