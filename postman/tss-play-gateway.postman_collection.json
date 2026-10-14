@@ -620,6 +620,96 @@
           "response": []
         },
         {
+          "name": "asset.resize",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.resize\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\", \\\"left\\\": 0, \\\"bottom\\\": 0, \\\"width\\\": 640, \\\"height\\\": 360}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.content",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.content\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\", \\\"content\\\": \\\"Hello\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.change-url",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.change-url\",\n    \"payload\": \"{\\\"integrationId\\\": \\\"{{asset_integration_id}}\\\", \\\"url\\\": \\\"https://example.com\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "asset.back",
           "request": {
             "method": "POST",
@@ -1376,6 +1466,96 @@
           "response": []
         },
         {
+          "name": "asset.resize",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.resize\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"left\\\": 0, \\\"bottom\\\": 0, \\\"width\\\": 640, \\\"height\\\": 360}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.content",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.content\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"content\\\": \\\"Hello\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.change-url",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.change-url\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"url\\\": \\\"https://example.com\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "asset.back",
           "request": {
             "method": "POST",
@@ -1838,7 +2018,7 @@
               "    CorruptedScene: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'assets:*CorruptedAsset', 5: 'index:i' },",
               "    CorruptedAsset: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'code:i', 5: 'type:E.CorruptedAssetType' },",
               "    StoryDataResponse: { 1: 'story:Story' },",
-              "    Story: { 1: 'uuid:s', 2: 'title:s', 3: 'version:i', 4: 'activeSceneUuid:s', 5: 'volume:f', 6: 'screensaver:Screensaver', 7: 'scenes:*Scene', 8: 'assets:*Asset', 9: 'triggers:*Trigger', 10: 'integrationId:s', 11: 'groups:*Group' },",
+              "    Story: { 1: 'uuid:s', 2: 'title:s', 3: 'version:i', 4: 'activeSceneUuid:s', 5: 'volume:f', 6: 'screensaver:Screensaver', 7: 'scenes:*Scene', 8: 'assets:*Asset', 9: 'triggers:*Trigger', 10: 'integrationId:s', 11: 'groups:*Group', 12: 'returnToLastSceneAfterScreensaver:b', 13: 'backgroundColor:s' },",
               "    Group: { 1: 'uuid:s', 2: 'name:s', 3: 'baseLayer:i', 4: 'inScenes:*s', 5: 'assets:*s' },",
               "    Screensaver: { 1: 'uuid:s', 2: 'delay:i' },",
               "    Scene: { 1: 'uuid:s', 2: 'title:s', 3: 'autoSwitch:b', 4: 'assets:*s', 5: 'effectTransition:EffectTransition', 6: 'customTransition:CustomTransition', 7: 'integrationId:s', 8: 'thumbnails:Thumbnails', 9: 'sceneIndex:i' },",
@@ -1848,15 +2028,17 @@
               "    Asset: { 1: 'uuid:s', 2: 'title:s', 3: 'layer:i', 4: 'opacity:f', 6: 'draggable:b', 7: 'roundedCorners:b', 8: 'visible:b', 9: 'rectangle:Rectangle', 10: 'margins:Margins', 11: 'urlData:UrlData', 12: 'videoData:VideoData', 13: 'textData:TextData', 14: 'soundData:SoundData', 15: 'pdfData:PdfData', 16: 'ndiData:NdiData', 17: 'imageData:ImageData', 18: 'integrationId:s', 19: 'hasOnClickActions:b', 20: 'thumbnails:Thumbnails' },",
               "    Rectangle: { 1: 'x:f', 2: 'y:f', 3: 'width:f', 4: 'height:f' },",
               "    Margins: { 1: 'left:i', 2: 'right:i', 3: 'top:i', 4: 'bottom:i' },",
-              "    UrlData: { 1: 'urlNavigation:b', 2: 'url:s', 3: 'volume:f', 4: 'back:b', 5: 'forward:b', 6: 'home:b', 7: 'inputFocus:b', 8: 'streamActive:b', 9: 'requests:*UrlRequest', 10: 'isMuted:b' },",
-              "    VideoData: { 1: 'play:b', 3: 'loop:b', 4: 'split:b', 5: 'volume:f', 6: 'progress:d', 7: 'duration:i', 8: 'codec:s', 9: 'files:*FileData', 10: 'isLoaded:b', 11: 'isMuted:b' },",
-              "    TextData: { 1: 'horizontalAlignment:E.TextHorizontalAlignment', 2: 'verticalAlignment:E.TextVerticalAlignment', 3: 'color:s', 4: 'font:s', 5: 'size:i', 6: 'text:s', 7: 'bold:b', 8: 'italic:b', 9: 'underline:b', 10: 'fontFile:s', 11: 'lineHeight:f' },",
+              "    UrlData: { 1: 'urlNavigation:b', 2: 'url:s', 3: 'volume:f', 4: 'back:b', 5: 'forward:b', 6: 'home:b', 7: 'inputFocus:b', 8: 'streamActive:b', 9: 'requests:*UrlRequest', 10: 'isMuted:b', 11: 'zoom:i' },",
+              "    VideoData: { 1: 'play:b', 3: 'loop:b', 4: 'split:b', 5: 'volume:f', 6: 'progress:d', 7: 'duration:i', 8: 'codec:s', 9: 'files:*FileData', 10: 'isLoaded:b', 11: 'isMuted:b', 12: 'hideOnFinish:b' },",
+              "    TextData: { 1: 'horizontalAlignment:E.TextHorizontalAlignment', 2: 'verticalAlignment:E.TextVerticalAlignment', 3: 'color:s', 4: 'font:s', 5: 'size:i', 6: 'text:s', 7: 'bold:b', 8: 'italic:b', 9: 'underline:b', 10: 'fontFile:s', 11: 'lineHeight:f', 12: 'paragraphs:*TextParagraph' },",
+              "    TextParagraph: { 1: 'runs:*TextRun' },",
+              "    TextRun: { 1: 'text:s', 2: 'fontFile:s', 3: 'size:i', 4: 'color:s', 5: 'underline:b' },",
               "    SoundData: { 1: 'play:b', 2: 'loop:b', 3: 'file:FileData', 4: 'duration:i', 5: 'volume:f', 6: 'progress:d', 7: 'isMuted:b' },",
               "    PdfData: { 1: 'page:i', 2: 'pageCount:i', 3: 'file:FileData' },",
               "    NdiData: { 1: 'sourceName:s', 2: 'visibleOnConnection:b', 3: 'volume:f', 4: 'connected:b', 5: 'isMuted:b' },",
               "    ImageData: { 1: 'files:*FileData' },",
               "    FileData: { 1: 'uuid:s', 2: 'version:i', 3: 'name:s', 4: 'path:s' },",
-              "    UrlRequest: { 1: 'navigation:E.NavigationType', 2: 'key:s', 3: 'touch:UrlTouch', 4: 'internal:b' },",
+              "    UrlRequest: { 1: 'navigation:E.NavigationType', 2: 'key:s', 3: 'touch:UrlTouch', 4: 'internal:b', 5: 'url:s' },",
               "    UrlTouch: { 1: 'type:E.UrlTouchType', 2: 'x:f', 3: 'y:f', 4: 'touchId:i' },",
               "    Trigger: { 1: 'uuid:s', 2: 'actions:*Action' },",
               "    Action: { 1: 'uuid:s', 2: 'screenId:i', 3: 'type:E.ActionType' },",
