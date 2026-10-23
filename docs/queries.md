@@ -37,5 +37,8 @@ The request payload is empty unless a message is named. The response column name
 | `story.corrupted-assets` | none | corruptedAssets |
 | `story.data` | StoryDataRequest | storyData |
 | `scene.status` | none | currentState |
+| `asset.stream-offer` | UrlAssetStreamOfferRequest | urlAssetStreamAnswer |
 
 Note for `story.available-stories`: set the `limit` field explicitly. The player returns at most `limit` stories, and the protobuf default of 0 returns none.
+
+Note for `asset.stream-offer`: it starts a WebRTC stream of a url asset, see [Streaming a url asset](requests.md#streaming-a-url-asset). The player refuses the offer with code 701 when no story is running, 703 when the url asset is not loaded, 704 when the asset is not a url asset, and 716 when it already streams to its maximum number of viewers.
