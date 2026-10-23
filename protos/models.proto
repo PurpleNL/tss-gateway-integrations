@@ -144,7 +144,7 @@ message TextData {
     TextVerticalAlignment verticalAlignment = 2;
     string color = 3; // Hex color string, for example "#FF8800".
     string font = 4 [deprecated = true];
-    int32 size = 5;
+    int32 size = 5; // Font size in px, rounded to a whole number; exactSize carries the fraction.
     string text = 6;
     bool bold = 7 [deprecated = true];
     bool italic = 8 [deprecated = true];
@@ -152,9 +152,11 @@ message TextData {
     string fontFile = 10;
     float lineHeight = 11;
     repeated TextParagraph paragraphs = 12; // Styled text, one paragraph per line of the text. Empty: the whole text uses the base style above.
+    optional float exactSize = 13; // Font size in px including its fraction, for example in a scaled story. When set, it is the size to render with instead of size.
 }
 
-// One line of styled text. A paragraph without runs is an empty line.
+// One line of styled text. A paragraph without runs is an empty line in the base style; an empty line in another style
+// has one run without text that carries that style.
 message TextParagraph {
     repeated TextRun runs = 1;
 }
@@ -162,9 +164,9 @@ message TextParagraph {
 // A piece of text in one style. A run only sets the properties that differ from the base style of
 // its TextData; a property that is not set inherits the base style.
 message TextRun {
-    string text = 1; // Contains no line breaks; the paragraphs separate the lines.
+    string text = 1; // Contains no line breaks; the paragraphs separate the lines. Empty: the run only sizes its line.
     optional string fontFile = 2; // Same form as TextData.fontFile.
-    optional int32 size = 3; // Same unit as TextData.size.
+    optional float size = 3; // Same unit as TextData.size.
     optional string color = 4; // Hex color string, for example "#FF8800".
     optional bool underline = 5;
 }
