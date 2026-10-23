@@ -151,6 +151,22 @@ message TextData {
     bool underline = 9;
     string fontFile = 10;
     float lineHeight = 11;
+    repeated TextParagraph paragraphs = 12; // Styled text, one paragraph per line of the text. Empty: the whole text uses the base style above.
+}
+
+// One line of styled text. A paragraph without runs is an empty line.
+message TextParagraph {
+    repeated TextRun runs = 1;
+}
+
+// A piece of text in one style. A run only sets the properties that differ from the base style of
+// its TextData; a property that is not set inherits the base style.
+message TextRun {
+    string text = 1; // Contains no line breaks; the paragraphs separate the lines.
+    optional string fontFile = 2; // Same form as TextData.fontFile.
+    optional int32 size = 3; // Same unit as TextData.size.
+    optional string color = 4; // Hex color string, for example "#FF8800".
+    optional bool underline = 5;
 }
 
 message SoundData
