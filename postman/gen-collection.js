@@ -94,6 +94,8 @@ const commandPayloads = {
   'scene.previous': '{}',
   'scene.skip-transition': '{}',
   'trigger.fire': '{"triggerUuid": "<trigger-uuid>", "state": true}',
+  'asset.stream-resize': '{"uuid": "{{asset_uuid}}", "sessionId": "<session-id>", "maxWidth": 1920, "maxHeight": 1080}',
+  'asset.stream-stop': '{"uuid": "{{asset_uuid}}", "sessionId": "<session-id>"}',
 };
 
 const queryPayloads = {
@@ -105,6 +107,7 @@ const queryPayloads = {
   'story.corrupted-assets': '{}',
   'story.data': '{"uuid": "{{story_uuid}}", "version": 1}',
   'scene.status': '{}',
+  'asset.stream-offer': '{"uuid": "{{asset_uuid}}", "sdp": "<complete WebRTC offer SDP>", "maxWidth": 1920, "maxHeight": 1080}',
 };
 
 // The request and query surface is whatever the SDK exposes: every RequestAsync/CallAsync
@@ -138,6 +141,8 @@ function topicCommands(topic) {
 const storyCommands = topicCommands('story');
 const sceneCommands = topicCommands('scene');
 const triggerCommands = topicCommands('trigger');
+// Asset commands that take only a uuid, such as the url stream session requests.
+const uuidOnlyAssetCommands = topicCommands('asset');
 
 function assetCommands(id) {
   return Object.entries(assetPayloadExtras).map(([key, extra]) => command(key, `{${id}${extra}}`));
@@ -185,7 +190,7 @@ const DECODER_CORE = String.raw`var ENUMS = {
     EaseType: ['LINEAR', 'SMOOTH', 'BUTTERSMOOTH', 'EXTRA_BUTTERSMOOTH', 'QUAD_IN', 'QUAD_OUT', 'QUAD_IN_OUT', 'CUBIC_IN', 'CUBIC_OUT', 'CUBIC_IN_OUT', 'QUART_IN', 'QUART_OUT', 'QUART_IN_OUT', 'QUAD_CIRC_IN', 'QUAD_CIRC_OUT', 'QUAD_CIRC_IN_OUT', 'CUBIC_CIRC_IN', 'CUBIC_CIRC_OUT', 'CUBIC_CIRC_IN_OUT', 'QUART_CIRC_IN', 'QUART_CIRC_OUT', 'QUART_CIRC_IN_OUT', 'BOUNCE_IN', 'BOUNCE_OUT', 'BOUNCE_IN_OUT', 'ELASTIC_IN', 'ELASTIC_OUT', 'ELASTIC_IN_OUT', 'ASYNC_SMOOTH']
 };
 var MSG = {
-    Response: { 1: 'error:Error', 2: 'ok:Ok', 3: 'storyStatus:StoryStatusResponse', 4: 'availableStories:AvailableStoriesResponse', 5: 'availableScenes:AvailableScenesResponse', 6: 'currentState:CurrentStateResponse', 7: 'instanceInfo:InstanceInfo', 8: 'corruptedAssets:CorruptedAssetsResponse', 9: 'storyData:StoryDataResponse', 10: 'availableStory:AvailableStory' },
+    Response: { 1: 'error:Error', 2: 'ok:Ok', 3: 'storyStatus:StoryStatusResponse', 4: 'availableStories:AvailableStoriesResponse', 5: 'availableScenes:AvailableScenesResponse', 6: 'currentState:CurrentStateResponse', 7: 'instanceInfo:InstanceInfo', 8: 'corruptedAssets:CorruptedAssetsResponse', 9: 'storyData:StoryDataResponse', 10: 'availableStory:AvailableStory', 11: 'urlAssetStreamAnswer:UrlAssetStreamAnswer' },
     Ok: {},
     Error: { 1: 'message:s', 2: 'code:i' },
     StoryStatusResponse: { 1: 'status:E.State', 2: 'storyTitle:s', 3: 'storyVersion:i', 4: 'transitionDurationMs:i', 5: 'storyUuid:s' },
@@ -199,6 +204,7 @@ var MSG = {
     CorruptedScene: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'assets:*CorruptedAsset', 5: 'index:i' },
     CorruptedAsset: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'code:i', 5: 'type:E.CorruptedAssetType' },
     StoryDataResponse: { 1: 'story:Story' },
+    UrlAssetStreamAnswer: { 1: 'sdp:s', 2: 'sessionId:s' },
     Story: { 1: 'uuid:s', 2: 'title:s', 3: 'version:i', 4: 'activeSceneUuid:s', 5: 'volume:f', 6: 'screensaver:Screensaver', 7: 'scenes:*Scene', 8: 'assets:*Asset', 9: 'triggers:*Trigger', 10: 'integrationId:s', 11: 'groups:*Group', 12: 'returnToLastSceneAfterScreensaver:b', 13: 'backgroundColor:s' },
     Group: { 1: 'uuid:s', 2: 'name:s', 3: 'baseLayer:i', 4: 'inScenes:*s', 5: 'assets:*s' },
     Screensaver: { 1: 'uuid:s', 2: 'delay:i' },
@@ -428,7 +434,7 @@ const collection = {
     { name: 'Commands - story', item: storyCommands },
     { name: 'Commands - scene', item: sceneCommands },
     { name: 'Commands - asset integrationId', description: 'AssetRequest is a oneof: send either "integrationId" or "uuid", never both.', item: assetCommands(assetIds.integrationId) },
-    { name: 'Commands - asset uuid', description: 'AssetRequest is a oneof: send either "integrationId" or "uuid", never both.', item: assetCommands(assetIds.uuid) },
+    { name: 'Commands - asset uuid', description: 'AssetRequest is a oneof: send either "integrationId" or "uuid", never both.', item: [...assetCommands(assetIds.uuid), ...uuidOnlyAssetCommands] },
     { name: 'Commands - trigger', item: triggerCommands },
     {
       name: 'Queries',
