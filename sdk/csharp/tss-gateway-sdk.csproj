@@ -44,9 +44,47 @@
 		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
+	<!-- The dll bytes differ per commit, checkout path and compiler version, so the Unity plugin is compared
+	     on a fingerprint of the SDK sources instead. git hash-object makes it independent of line endings. -->
+	<Target Name="ComputeSourceFingerprint" BeforeTargets="GetAssemblyAttributes">
+		<ItemGroup>
+			<_FingerprintInput Include="**\*.cs;Protos\**\*.proto;$(MSBuildProjectFile)" Exclude="bin\**;obj\**;examples\**" />
+		</ItemGroup>
 		<Exec
-			Command="if exist &quot;$(TargetDir)..\netstandard2.1\$(TargetName).dll&quot; (&#xA;  xcopy &quot;$(TargetDir)..\netstandard2.1\$(TargetName).dll&quot; &quot;$(ProjectDir)..\tss-play-unity\Assets\Plugins\&quot; /Y&#xA;)" />
+			Command="git hash-object -- @(_FingerprintInput->'&quot;%(Identity)&quot;', ' ')"
+			WorkingDirectory="$(MSBuildProjectDirectory)"
+			ConsoleToMSBuild="true"
+			StandardOutputImportance="low"
+			StandardErrorImportance="low"
+			IgnoreExitCode="true"
+			IgnoreStandardErrorWarningFormat="true">
+			<Output TaskParameter="ConsoleOutput" ItemName="_FingerprintBlob" />
+			<Output TaskParameter="ExitCode" PropertyName="_FingerprintExitCode" />
+		</Exec>
+		<WriteLinesToFile
+			Condition="'$(_FingerprintExitCode)' == '0'"
+			File="$(IntermediateOutputPath)source-fingerprint.txt"
+			Lines="@(_FingerprintInput);@(_FingerprintBlob)"
+			Overwrite="true"
+			WriteOnlyWhenDifferent="true" />
+		<GetFileHash Condition="'$(_FingerprintExitCode)' == '0'" Files="$(IntermediateOutputPath)source-fingerprint.txt">
+			<Output TaskParameter="Hash" PropertyName="SourceFingerprint" />
+		</GetFileHash>
+		<ItemGroup Condition="'$(SourceFingerprint)' != ''">
+			<AssemblyMetadata Include="SourceFingerprint" Value="$(SourceFingerprint)" />
+		</ItemGroup>
+		<Message Condition="'$(SourceFingerprint)' == ''" Importance="high" Text="No SDK source fingerprint (git hash-object failed); the Unity plugin dll is always copied." />
+	</Target>
+
+	<Target Name="CopyToUnityPlugin" AfterTargets="Build" Condition="'$(OS)' == 'Windows_NT' And '$(TargetFramework)' == 'netstandard2.1'">
+		<PropertyGroup>
+			<_UnityPluginDir>$(MSBuildProjectDirectory)\..\tss-play-unity\Assets\Plugins\</_UnityPluginDir>
+			<_UnityPluginDll>$(_UnityPluginDir)$(TargetFileName)</_UnityPluginDll>
+		</PropertyGroup>
+		<Copy
+			Condition="'$(SourceFingerprint)' == '' Or !Exists('$(_UnityPluginDll)') Or !$([System.IO.File]::ReadAllText('$(_UnityPluginDll)').Contains('$(SourceFingerprint)'))"
+			SourceFiles="$(TargetPath)"
+			DestinationFolder="$(_UnityPluginDir)" />
 	</Target>
 
 </Project>
