@@ -166,6 +166,10 @@ namespace TSS.Gateway.Sdk
 
         public Task DisableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-off", new AssetRequest {IntegrationId = integrationId}, scope);
 
+        public Task ResizeUrlAssetStreamAsync(string uuid, string sessionId, int maxWidth, int maxHeight) => RequestAsync("asset", "stream-resize", new UrlAssetStreamResizeRequest {Uuid = uuid, SessionId = sessionId, MaxWidth = maxWidth, MaxHeight = maxHeight}, RequestScope.Screen);
+
+        public Task StopUrlAssetStreamAsync(string uuid, string sessionId) => RequestAsync("asset", "stream-stop", new UrlAssetStreamStopRequest {Uuid = uuid, SessionId = sessionId}, RequestScope.Screen);
+
         public Task EnableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-on", new AssetRequest {IntegrationId = integrationId}, scope);
 
         public Task DisableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-off", new AssetRequest {IntegrationId = integrationId}, scope);
