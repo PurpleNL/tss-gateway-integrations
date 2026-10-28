@@ -1914,6 +1914,66 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "asset.stream-resize",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-resize\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"sessionId\\\": \\\"<session-id>\\\", \\\"maxWidth\\\": 1920, \\\"maxHeight\\\": 1080}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-stop",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"5000\"\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-stop\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"sessionId\\\": \\\"<session-id>\\\"}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-requests-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-requests-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -2004,7 +2064,7 @@
               "    EaseType: ['LINEAR', 'SMOOTH', 'BUTTERSMOOTH', 'EXTRA_BUTTERSMOOTH', 'QUAD_IN', 'QUAD_OUT', 'QUAD_IN_OUT', 'CUBIC_IN', 'CUBIC_OUT', 'CUBIC_IN_OUT', 'QUART_IN', 'QUART_OUT', 'QUART_IN_OUT', 'QUAD_CIRC_IN', 'QUAD_CIRC_OUT', 'QUAD_CIRC_IN_OUT', 'CUBIC_CIRC_IN', 'CUBIC_CIRC_OUT', 'CUBIC_CIRC_IN_OUT', 'QUART_CIRC_IN', 'QUART_CIRC_OUT', 'QUART_CIRC_IN_OUT', 'BOUNCE_IN', 'BOUNCE_OUT', 'BOUNCE_IN_OUT', 'ELASTIC_IN', 'ELASTIC_OUT', 'ELASTIC_IN_OUT', 'ASYNC_SMOOTH']",
               "};",
               "var MSG = {",
-              "    Response: { 1: 'error:Error', 2: 'ok:Ok', 3: 'storyStatus:StoryStatusResponse', 4: 'availableStories:AvailableStoriesResponse', 5: 'availableScenes:AvailableScenesResponse', 6: 'currentState:CurrentStateResponse', 7: 'instanceInfo:InstanceInfo', 8: 'corruptedAssets:CorruptedAssetsResponse', 9: 'storyData:StoryDataResponse', 10: 'availableStory:AvailableStory' },",
+              "    Response: { 1: 'error:Error', 2: 'ok:Ok', 3: 'storyStatus:StoryStatusResponse', 4: 'availableStories:AvailableStoriesResponse', 5: 'availableScenes:AvailableScenesResponse', 6: 'currentState:CurrentStateResponse', 7: 'instanceInfo:InstanceInfo', 8: 'corruptedAssets:CorruptedAssetsResponse', 9: 'storyData:StoryDataResponse', 10: 'availableStory:AvailableStory', 11: 'urlAssetStreamAnswer:UrlAssetStreamAnswer' },",
               "    Ok: {},",
               "    Error: { 1: 'message:s', 2: 'code:i' },",
               "    StoryStatusResponse: { 1: 'status:E.State', 2: 'storyTitle:s', 3: 'storyVersion:i', 4: 'transitionDurationMs:i', 5: 'storyUuid:s' },",
@@ -2018,6 +2078,7 @@
               "    CorruptedScene: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'assets:*CorruptedAsset', 5: 'index:i' },",
               "    CorruptedAsset: { 1: 'uuid:s', 2: 'integrationId:s', 3: 'name:s', 4: 'code:i', 5: 'type:E.CorruptedAssetType' },",
               "    StoryDataResponse: { 1: 'story:Story' },",
+              "    UrlAssetStreamAnswer: { 1: 'sdp:s', 2: 'sessionId:s' },",
               "    Story: { 1: 'uuid:s', 2: 'title:s', 3: 'version:i', 4: 'activeSceneUuid:s', 5: 'volume:f', 6: 'screensaver:Screensaver', 7: 'scenes:*Scene', 8: 'assets:*Asset', 9: 'triggers:*Trigger', 10: 'integrationId:s', 11: 'groups:*Group', 12: 'returnToLastSceneAfterScreensaver:b', 13: 'backgroundColor:s' },",
               "    Group: { 1: 'uuid:s', 2: 'name:s', 3: 'baseLayer:i', 4: 'inScenes:*s', 5: 'assets:*s' },",
               "    Screensaver: { 1: 'uuid:s', 2: 'delay:i' },",
@@ -2417,6 +2478,36 @@
             "body": {
               "mode": "raw",
               "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"10000\",\n        \"correlation_id\": \"{{$guid}}\",\n        \"headers\": {\n            \"tss-reply-to\": \"{{reply_key}}\"\n        }\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.scene.status\",\n    \"payload\": \"{}\",\n    \"payload_encoding\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/exchanges/%2f/tss-api-publish/publish",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "exchanges",
+                "%2f",
+                "tss-api-publish",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "asset.stream-offer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"properties\": {\n        \"content_type\": \"application/x-protobuf\",\n        \"expiration\": \"10000\",\n        \"correlation_id\": \"{{$guid}}\",\n        \"headers\": {\n            \"tss-reply-to\": \"{{reply_key}}\"\n        }\n    },\n    \"routing_key\": \"tss.postman.{{location_uuid}}.{{setup_uuid}}.{{screen_id}}.asset.stream-offer\",\n    \"payload\": \"{\\\"uuid\\\": \\\"{{asset_uuid}}\\\", \\\"sdp\\\": \\\"<complete WebRTC offer SDP>\\\", \\\"maxWidth\\\": 1920, \\\"maxHeight\\\": 1080}\",\n    \"payload_encoding\": \"string\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
