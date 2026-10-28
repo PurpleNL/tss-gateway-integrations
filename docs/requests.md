@@ -76,11 +76,36 @@ Url assets show a web page. These requests also require a running story and the 
 | `asset.input` | UrlAssetInputRequest | Simulates keyboard input on the page | | none |
 | `asset.keyboard-on` / `asset.keyboard-off` | AssetRequest | Enables or disables the on-screen keyboard | | none |
 | `asset.navigation-on` / `asset.navigation-off` | AssetRequest | Enables or disables the navigation panel | | none |
-| `asset.stream-on` / `asset.stream-off` | AssetRequest | Enables or disables streaming for the page | | none |
+| `asset.stream-on` / `asset.stream-off` | AssetRequest | Enables or disables the JPEG stream of the page | | none |
+| `asset.stream-resize` | UrlAssetStreamResizeRequest | Changes the size of a running WebRTC stream, see [Streaming a url asset](#streaming-a-url-asset) | Stream started with `asset.stream-offer` | none |
+| `asset.stream-stop` | UrlAssetStreamStopRequest | Stops one viewer's WebRTC stream, see [Streaming a url asset](#streaming-a-url-asset) | Stream started with `asset.stream-offer` | none |
 
 `asset.change-url` changes the page for the rest of the scene, not for the story. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again. A url asset in a group is never unloaded, so it keeps the requested page until the story stops. The player loads `http` and `https` urls.
 
 A page a visitor navigates to themselves raises `asset.url-changed` as well, so an integration that only wants to see its own changes should match the url it requested.
+
+### Streaming a url asset
+
+The player can stream a url asset as live video to a viewer, for example a tablet that shows the page enlarged. The video goes directly from the player to the viewer over WebRTC. The gateway only carries the start, resize and stop.
+
+1. The viewer sends the [query](queries.md) `asset.stream-offer` with the asset uuid and a WebRTC offer. The offer must be complete: finish ICE gathering before you send it.
+2. The player answers with its WebRTC answer and a session id. Apply the answer, and the video starts.
+3. Send `asset.stream-resize` with the session id when the size of the view changes. The stream changes size without a new offer.
+4. Send `asset.stream-stop` with the session id when the viewer closes. Other viewers of the asset keep streaming.
+
+The stream is H.264 at up to 30 fps, without audio. It keeps the aspect ratio of the asset and fits in the requested size. It is never larger than the asset itself or 3840x2160. The field comments in [`requests.proto`](../protos/requests.proto) give the exact rules.
+
+A player streams to at most `maxUrlStreams` viewers at the same time (player setting, default 4), counted over all its url assets. Above that, the offer gets error code 716. A stream stops by itself when the asset unloads, and a few seconds after the viewer disappears.
+
+### Network requirements
+
+The video does not pass through the gateway, so the viewer must reach the player directly:
+
+- The viewer connects to the player PC over UDP, on random high ports.
+- Wi-Fi client isolation and separate VLANs for viewer and player block the stream.
+- The Windows Firewall on the player PC must allow inbound UDP for the player.
+- Each viewer uses up to 8 Mbit/s at 1920x1080 and up to 30 Mbit/s at 3840x2160.
+- No internet connection, STUN or TURN server is needed.
 
 ## Trigger
 

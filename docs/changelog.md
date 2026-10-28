@@ -2,6 +2,13 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
+## Unreleased
+
+- New query `asset.stream-offer`, which starts a WebRTC stream of a url asset to one viewer. The video goes directly from the player to the viewer, the gateway only carries the handshake. See [Streaming a url asset](requests.md#streaming-a-url-asset).
+- New requests `asset.stream-resize` and `asset.stream-stop`, which change the size of a running stream and stop it.
+- New error code 716: the player already streams to its maximum number of viewers (`maxUrlStreams`, default 4).
+- The C# SDK exposes OfferUrlAssetStreamAsync, ResizeUrlAssetStreamAsync and StopUrlAssetStreamAsync.
+
 ## 2026-09-25
 
 - `scene.change` accepts `sceneIndex` as a third way to address the scene, next to `uuid` and `integrationId`. The screensaver scene is index 0, the other scenes count from 1 in story order, skipping the screensaver. The C# SDK exposes ChangeSceneByIndexAsync.
