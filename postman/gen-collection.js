@@ -68,6 +68,7 @@ const assetPayloadExtras = {
   'asset.move': ', "left": 0, "bottom": 0',
   'asset.crop': ', "left": 0, "top": 0, "right": 0, "bottom": 0',
   'asset.resize': ', "left": 0, "bottom": 0, "width": 640, "height": 360',
+  'asset.animate-rect': ', "x": 0, "y": 0, "width": 640, "height": 360, "animationTimeInMs": 1000',
   'asset.content': ', "content": "Hello"',
   'asset.change-url': ', "url": "https://example.com"',
   'asset.back': '',

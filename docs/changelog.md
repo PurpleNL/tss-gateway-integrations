@@ -8,6 +8,7 @@ Protocol and documentation changes, per release. Maintained by hand, newest firs
 - New requests `asset.stream-resize` and `asset.stream-stop`, which change the size of a running stream and stop it.
 - New error code 716: the player already streams to its maximum number of viewers (`maxUrlStreams`, default 4).
 - The C# SDK exposes OfferUrlAssetStreamAsync, ResizeUrlAssetStreamAsync and StopUrlAssetStreamAsync.
+- The C# SDK exposes AnimateAssetRectAsync. Every asset request method also has a ByUuid variant, for example ShowAssetByUuidAsync, which addresses the asset by its uuid instead of its integrationId.
 
 ## 2026-09-25
 
