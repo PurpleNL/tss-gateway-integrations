@@ -77,32 +77,150 @@ namespace TSS.Gateway.Sdk
         // Asset
         public Task ShowAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "show", new AssetRequest {IntegrationId = integrationId}, scope);
 
+        public Task ShowAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "show", new AssetRequest {Uuid = uuid}, scope);
+
         public Task HideAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "hide", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task HideAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "hide", new AssetRequest {Uuid = uuid}, scope);
 
         public Task PlayAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "play", new AssetRequest {IntegrationId = integrationId}, scope);
 
+        public Task PlayAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "play", new AssetRequest {Uuid = uuid}, scope);
+
         public Task PauseAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "pause", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task PauseAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "pause", new AssetRequest {Uuid = uuid}, scope);
 
         public Task MuteAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "mute", new AssetRequest {IntegrationId = integrationId}, scope);
 
+        public Task MuteAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "mute", new AssetRequest {Uuid = uuid}, scope);
+
         public Task UnmuteAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "unmute", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task UnmuteAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "unmute", new AssetRequest {Uuid = uuid}, scope);
 
         public Task ChangeAssetVolumeAsync(string integrationId, float normalizedVolume, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "volume", new AssetVolumeChangeRequest {IntegrationId = integrationId, NormalizedVolume = normalizedVolume}, scope);
 
+        public Task ChangeAssetVolumeByUuidAsync(string uuid, float normalizedVolume, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "volume", new AssetVolumeChangeRequest {Uuid = uuid, NormalizedVolume = normalizedVolume}, scope);
+
         public Task SeekAssetAsync(string integrationId, float normalizedProgress, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "seek", new AssetSeekRequest {IntegrationId = integrationId, NormalizedProgress = normalizedProgress}, scope);
+
+        public Task SeekAssetByUuidAsync(string uuid, float normalizedProgress, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "seek", new AssetSeekRequest {Uuid = uuid, NormalizedProgress = normalizedProgress}, scope);
 
         public Task ChangeAssetPageAsync(string integrationId, int page, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "page", new AssetPageChangeRequest {IntegrationId = integrationId, Page = page}, scope);
 
+        public Task ChangeAssetPageByUuidAsync(string uuid, int page, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "page", new AssetPageChangeRequest {Uuid = uuid, Page = page}, scope);
+
         public Task MoveAssetAsync(string integrationId, float bottom, float left, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "move", new AssetMoveRequest {IntegrationId = integrationId, Bottom = bottom, Left = left}, scope);
+
+        public Task MoveAssetByUuidAsync(string uuid, float bottom, float left, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "move", new AssetMoveRequest {Uuid = uuid, Bottom = bottom, Left = left}, scope);
 
         public Task EnlargeAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "enlarge", new AssetRequest {IntegrationId = integrationId}, scope);
 
+        public Task EnlargeAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "enlarge", new AssetRequest {Uuid = uuid}, scope);
+
         public Task ShrinkAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "shrink", new AssetRequest {IntegrationId = integrationId}, scope);
 
-        public Task CropAssetAsync(string integrationId, int? left = null, int? right = null, int? top = null, int? bottom = null, RequestScope scope = RequestScope.Screen)
-        {
-            AssetCropRequest request = new AssetCropRequest {IntegrationId = integrationId};
+        public Task ShrinkAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "shrink", new AssetRequest {Uuid = uuid}, scope);
 
+        public Task CropAssetAsync(string integrationId, int? left = null, int? right = null, int? top = null, int? bottom = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "crop", WithMargins(new AssetCropRequest {IntegrationId = integrationId}, left, right, top, bottom), scope);
+
+        public Task CropAssetByUuidAsync(string uuid, int? left = null, int? right = null, int? top = null, int? bottom = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "crop", WithMargins(new AssetCropRequest {Uuid = uuid}, left, right, top, bottom), scope);
+
+        public Task ResizeAssetAsync(string integrationId, float? left = null, float? bottom = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "resize", WithBounds(new AssetResizeRequest {IntegrationId = integrationId}, left, bottom, width, height), scope);
+
+        public Task ResizeAssetByUuidAsync(string uuid, float? left = null, float? bottom = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "resize", WithBounds(new AssetResizeRequest {Uuid = uuid}, left, bottom, width, height), scope);
+
+        public Task AnimateAssetRectAsync(string integrationId, int animationTimeInMs, float? x = null, float? y = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "animate-rect", WithRect(new AssetAnimateRectRequest {IntegrationId = integrationId, AnimationTimeInMs = animationTimeInMs}, x, y, width, height), scope);
+
+        public Task AnimateAssetRectByUuidAsync(string uuid, int animationTimeInMs, float? x = null, float? y = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "animate-rect", WithRect(new AssetAnimateRectRequest {Uuid = uuid, AnimationTimeInMs = animationTimeInMs}, x, y, width, height), scope);
+
+        // Url asset
+        public Task GoBackUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task GoBackUrlAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task GoForwardUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "forward", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task GoForwardUrlAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "forward", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task GoHomeUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "home", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task GoHomeUrlAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "home", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task RefreshUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "refresh", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task RefreshUrlAssetByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "refresh", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task EnableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetStreamByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-on", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task DisableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetStreamByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-off", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task ResizeUrlAssetStreamAsync(string uuid, string sessionId, int maxWidth, int maxHeight) => RequestAsync("asset", "stream-resize", new UrlAssetStreamResizeRequest {Uuid = uuid, SessionId = sessionId, MaxWidth = maxWidth, MaxHeight = maxHeight}, RequestScope.Screen);
+
+        public Task StopUrlAssetStreamAsync(string uuid, string sessionId) => RequestAsync("asset", "stream-stop", new UrlAssetStreamStopRequest {Uuid = uuid, SessionId = sessionId}, RequestScope.Screen);
+
+        public Task EnableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetNavigationByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-on", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task DisableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetNavigationByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-off", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task EnableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-on", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task EnableUrlAssetKeyboardByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-on", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task DisableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-off", new AssetRequest {IntegrationId = integrationId}, scope);
+
+        public Task DisableUrlAssetKeyboardByUuidAsync(string uuid, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-off", new AssetRequest {Uuid = uuid}, scope);
+
+        public Task SendUrlAssetInputAsync(string integrationId, string key, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "input", new UrlAssetInputRequest {IntegrationId = integrationId, Key = key}, scope);
+
+        public Task SendUrlAssetInputByUuidAsync(string uuid, string key, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "input", new UrlAssetInputRequest {Uuid = uuid, Key = key}, scope);
+
+        public Task SendUrlAssetTouchAsync(string integrationId, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "touch", new UrlAssetTouchRequest {IntegrationId = integrationId, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
+
+        public Task SendUrlAssetTouchByUuidAsync(string uuid, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "touch", new UrlAssetTouchRequest {Uuid = uuid, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
+
+        public Task ChangeUrlAssetUrlAsync(string integrationId, string url, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "change-url", new AssetUrlChangeRequest {IntegrationId = integrationId, Url = url}, scope);
+
+        public Task ChangeUrlAssetUrlByUuidAsync(string uuid, string url, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "change-url", new AssetUrlChangeRequest {Uuid = uuid, Url = url}, scope);
+
+        public Task ChangeAssetContentAsync(string integrationId, string content, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "content", new AssetContentChangeRequest {IntegrationId = integrationId, Content = content}, scope);
+
+        public Task ChangeAssetContentByUuidAsync(string uuid, string content, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("asset", "content", new AssetContentChangeRequest {Uuid = uuid, Content = content}, scope);
+
+        // Trigger
+        public Task FireTriggerAsync(string triggerUuid, bool? state = null, RequestScope scope = RequestScope.Screen)
+        {
+            TriggerFireRequest request = new TriggerFireRequest
+            {
+                TriggerUuid = triggerUuid
+            };
+
+            if (state.HasValue)
+            {
+                request.State = state.Value;
+            }
+
+            return RequestAsync("trigger", "fire", request, scope);
+        }
+
+        // The optional fields of a request are only set when a value is given, so the player keeps the current value of the others.
+        private static AssetCropRequest WithMargins(AssetCropRequest request, int? left, int? right, int? top, int? bottom)
+        {
             if (left.HasValue)
             {
                 request.Left = left.Value;
@@ -123,13 +241,11 @@ namespace TSS.Gateway.Sdk
                 request.Bottom = bottom.Value;
             }
 
-            return RequestAsync("asset", "crop", request, scope);
+            return request;
         }
 
-        public Task ResizeAssetAsync(string integrationId, float? left = null, float? bottom = null, float? width = null, float? height = null, RequestScope scope = RequestScope.Screen)
+        private static AssetResizeRequest WithBounds(AssetResizeRequest request, float? left, float? bottom, float? width, float? height)
         {
-            AssetResizeRequest request = new AssetResizeRequest {IntegrationId = integrationId};
-
             if (left.HasValue)
             {
                 request.Left = left.Value;
@@ -150,59 +266,32 @@ namespace TSS.Gateway.Sdk
                 request.Height = height.Value;
             }
 
-            return RequestAsync("asset", "resize", request, scope);
+            return request;
         }
 
-        // Url asset
-        public Task GoBackUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "back", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task GoForwardUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "forward", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task GoHomeUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "home", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task RefreshUrlAssetAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "refresh", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task EnableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-on", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task DisableUrlAssetStreamAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "stream-off", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task ResizeUrlAssetStreamAsync(string uuid, string sessionId, int maxWidth, int maxHeight) => RequestAsync("asset", "stream-resize", new UrlAssetStreamResizeRequest {Uuid = uuid, SessionId = sessionId, MaxWidth = maxWidth, MaxHeight = maxHeight}, RequestScope.Screen);
-
-        public Task StopUrlAssetStreamAsync(string uuid, string sessionId) => RequestAsync("asset", "stream-stop", new UrlAssetStreamStopRequest {Uuid = uuid, SessionId = sessionId}, RequestScope.Screen);
-
-        public Task EnableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-on", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task DisableUrlAssetNavigationAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "navigation-off", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task EnableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-on", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task DisableUrlAssetKeyboardAsync(string integrationId, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "keyboard-off", new AssetRequest {IntegrationId = integrationId}, scope);
-
-        public Task SendUrlAssetInputAsync(string integrationId, string key, RequestScope scope = RequestScope.Screen) => RequestAsync("asset", "input", new UrlAssetInputRequest {IntegrationId = integrationId, Key = key}, scope);
-
-        public Task SendUrlAssetTouchAsync(string integrationId, UrlTouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
-            RequestAsync("asset", "touch", new UrlAssetTouchRequest {IntegrationId = integrationId, Touch = new UrlTouch {Type = type, X = x, Y = y, TouchId = touchId}}, scope);
-
-        public Task ChangeUrlAssetUrlAsync(string integrationId, string url, RequestScope scope = RequestScope.Screen) =>
-            RequestAsync("asset", "change-url", new AssetUrlChangeRequest {IntegrationId = integrationId, Url = url}, scope);
-
-        public Task ChangeAssetContentAsync(string integrationId, string content, RequestScope scope = RequestScope.Screen) =>
-            RequestAsync("asset", "content", new AssetContentChangeRequest {IntegrationId = integrationId, Content = content}, scope);
-
-        // Trigger
-        public Task FireTriggerAsync(string triggerUuid, bool? state = null, RequestScope scope = RequestScope.Screen)
+        private static AssetAnimateRectRequest WithRect(AssetAnimateRectRequest request, float? x, float? y, float? width, float? height)
         {
-            TriggerFireRequest request = new TriggerFireRequest
+            if (x.HasValue)
             {
-                TriggerUuid = triggerUuid
-            };
-
-            if (state.HasValue)
-            {
-                request.State = state.Value;
+                request.X = x.Value;
             }
 
-            return RequestAsync("trigger", "fire", request, scope);
+            if (y.HasValue)
+            {
+                request.Y = y.Value;
+            }
+
+            if (width.HasValue)
+            {
+                request.Width = width.Value;
+            }
+
+            if (height.HasValue)
+            {
+                request.Height = height.Value;
+            }
+
+            return request;
         }
 
         private async Task RequestAsync(string topic, string action, IMessage message, RequestScope scope)
