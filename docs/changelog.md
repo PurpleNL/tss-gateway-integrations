@@ -2,6 +2,24 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
+## Unreleased
+
+- New query `asset.stream-offer`, which starts a WebRTC stream of a url asset to one viewer. The video goes directly from the player to the viewer, the gateway only carries the handshake. See [Streaming a url asset](requests.md#streaming-a-url-asset).
+- New requests `asset.stream-resize` and `asset.stream-stop`, which change the size of a running stream and stop it.
+- New error code 716: the player already streams to its maximum number of viewers (`maxUrlStreams`, default 4).
+- The C# SDK exposes OfferUrlAssetStreamAsync, ResizeUrlAssetStreamAsync and StopUrlAssetStreamAsync.
+- The C# SDK exposes AnimateAssetRectAsync. Every asset request method also has a ByUuid variant, for example ShowAssetByUuidAsync, which addresses the asset by its uuid instead of its integrationId.
+
+## 2026-09-25
+
+- `scene.change` accepts `sceneIndex` as a third way to address the scene, next to `uuid` and `integrationId`. The screensaver scene is index 0, the other scenes count from 1 in story order, skipping the screensaver. The C# SDK exposes ChangeSceneByIndexAsync.
+- The Scene model carries `sceneIndex`, visible in `story.data` and `scene.status`, and `scene.changing` and `scene.changed` carry the `sceneIndex` of the scene they identify.
+
+## 2026-09-15
+
+- New request `asset.change-url`, which loads another page in a url asset for the rest of the scene. The authored url stays the asset's home, so `asset.back` and `asset.home` still return to it, and leaving the scene loads it again.
+- New event `asset.url-changed`, published whenever the page a url asset shows changes, carrying the page that loaded. Besides `asset.change-url` it also covers `asset.back`, `asset.forward` and `asset.home`, the navigation panel, and a visitor following a link.
+
 ## 2026-08-26
 
 - New event `instance.state-changed`, published on every playback state change and carrying the new state. The C# SDK exposes WaitForInstanceStateChangedAsync to wait for a specific state.

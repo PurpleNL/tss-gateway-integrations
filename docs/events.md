@@ -31,7 +31,7 @@ An event is the player reporting a state change: a story started, a scene change
 | `scene.changing` | SceneEvent | A scene change started, before the transition runs, identifies the scene the transition leads to |
 | `scene.changed` | SceneEvent | The scene finished changing |
 
-Both carry the cause of the change: `CONTROL` (a request sent by control), `REQUEST` (the same requests from any other sender), `TRIGGER`, `ONCLICK`, `AUTOSWITCH` (the background video ended and the scene advanced automatically), `TIMEOUT` (the inactivity timeout activated the screensaver scene), or `TOUCH` (a press on the screensaver scene navigated back out of it). For `ONCLICK` and `TRIGGER`, `causeUuid` names the pressed asset or the fired trigger.
+Both carry the `sceneIndex` of the scene they identify (the screensaver scene is 0, the other scenes count from 1 in story order, see [Addressing assets and scenes](requests.md#addressing-assets-and-scenes)) and the cause of the change: `CONTROL` (a request sent by control), `REQUEST` (the same requests from any other sender), `TRIGGER`, `ONCLICK`, `AUTOSWITCH` (the background video ended and the scene advanced automatically), `TIMEOUT` (the inactivity timeout activated the screensaver scene), or `TOUCH` (a press on the screensaver scene navigated back out of it). For `ONCLICK` and `TRIGGER`, `causeUuid` names the pressed asset or the fired trigger.
 
 ## Asset
 
@@ -52,6 +52,9 @@ Both carry the cause of the change: `CONTROL` (a request sent by control), `REQU
 | `asset.cropped` | AssetCroppedEvent | The asset's crop meaningfully changed, carries the applied margins (a minimal change reports `asset.resized` instead) |
 | `asset.looped` | AssetEvent | A looping video or sound wrapped around |
 | `asset.completed` | AssetEvent | A non-looping video or sound reached its end and stopped |
+| `asset.url-changed` | AssetUrlChangedEvent | The page a url asset shows changed, carries the page that loaded |
+
+`asset.url-changed` reports every page change, whatever caused it: an `asset.change-url` request, `asset.back`, `asset.forward` or `asset.home`, the navigation panel, or a visitor following a link on the page. `asset.refresh` does not raise it, because the page stays the same. When a url redirects, the event carries the page that actually loaded, not the one that was requested.
 
 ## Screensaver
 
