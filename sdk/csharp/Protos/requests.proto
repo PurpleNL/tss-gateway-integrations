@@ -26,6 +26,7 @@ message Response {
 		CorruptedAssetsResponse corruptedAssets = 8;
 		StoryDataResponse storyData = 9;
 		AvailableStory availableStory = 10;
+		UrlAssetStreamAnswer urlAssetStreamAnswer = 11;
 	};
 }
 
@@ -50,7 +51,7 @@ message StoryStatusResponse {
 // Answer to story.available-stories.
 message AvailableStoriesResponse {
 	repeated AvailableStory stories = 1;
-	int32 count = 2; // Number of entries in stories, after search/offset/limit were applied.
+	int32 count = 2; // Number of stories matching the search, before offset and limit are applied; the total to page through.
 }
 
 // One story that is synced to this player. Also the answer to story.available-story.
@@ -97,10 +98,13 @@ message CurrentStateResponse {
 	float volume = 4; // Master volume, 0 to 1.
 }
 
+// Addresses the scene by uuid, integrationId, or sceneIndex. The screensaver scene is index 0, the
+// other scenes count from 1 in story order; index 0 is an error when the story has no screensaver.
 message SceneChangeRequest {
 	oneof scene {
 		string uuid = 1;
 		string integrationId = 2;
+		int32 sceneIndex = 3;
 	}
 }
 
@@ -211,6 +215,53 @@ message UrlAssetTouchRequest{
 	UrlTouch touch = 3;
 }
 
+// Loads another page in a url asset for the rest of the scene. The authored url stays the asset's
+// home, so back and home still return to it, and leaving the scene restores it.
+message AssetUrlChangeRequest {
+	oneof asset {
+		string uuid = 1;
+		string integrationId = 2;
+	}
+	string url = 3; // Rejected when it is not a http or https url, or when it is the page already loaded.
+}
+
+// Query asset.stream-offer: starts a WebRTC stream of a URL asset for one viewer, sent straight to the
+// viewer over the local network; the gateway only carries the handshake. The stream is H.264 at up to
+// 30 fps without audio. It keeps the asset's aspect ratio and fits in maxWidth x maxHeight, never above
+// the asset's own size, 3840 on either side or the pixel count of 3840x2160.
+// The player runs up to maxUrlStreams streams at a time (default 4), over all its URL assets, and
+// rejects the offer with code 716 once that limit is reached. A stream ends when the asset unloads, on
+// asset.stream-stop, or a few seconds after the viewer disappears.
+message UrlAssetStreamOfferRequest {
+	string uuid = 1; // One asset only, so there is no integration id.
+	string sdp = 2; // Complete offer SDP with ICE gathering finished; candidates are not sent separately.
+	optional int32 maxWidth = 3; // Largest size the viewer shows the stream at, in device pixels; absent leaves it to the other limits.
+	optional int32 maxHeight = 4;
+	optional int32 maxBitrateKbps = 5; // Encoder bitrate cap; absent scales with the stream size, 8000 at 1920x1080 up to 30000 at 3840x2160.
+}
+
+// Answer to asset.stream-offer.
+message UrlAssetStreamAnswer {
+	string sdp = 1; // Complete answer SDP with ICE gathering finished.
+	string sessionId = 2; // Identifies this viewer's stream; asset.stream-resize and asset.stream-stop take it.
+}
+
+// Request asset.stream-resize: the room the viewer shows the stream in changed. The player changes the
+// running stream's size, and its bitrate cap when the offer set none, without a new offer. Resizes
+// closer together than half a second are applied once, with the latest size.
+message UrlAssetStreamResizeRequest {
+	string uuid = 1; // The streamed asset.
+	string sessionId = 2; // From UrlAssetStreamAnswer.
+	int32 maxWidth = 3; // In device pixels, same rules as UrlAssetStreamOfferRequest.
+	int32 maxHeight = 4;
+}
+
+// Request asset.stream-stop: stops one viewer's stream; other viewers of the asset keep streaming.
+message UrlAssetStreamStopRequest {
+	string uuid = 1; // The streamed asset.
+	string sessionId = 2; // From UrlAssetStreamAnswer.
+}
+
 message TriggerFireRequest {
 	string triggerUuid = 1;
 	optional bool state = 2; // For toggle actions: true forces show, false forces hide, absent toggles.
@@ -275,7 +326,7 @@ enum CorruptedAssetType
 message AvailableStoriesRequest {
 	SortDirection sortDir = 1;
 	StorySortBy sortBy = 2;
-	string search = 3; // Filters on the story name.
+	string search = 3; // Filters on the story name, description and author, tolerating typos and partial words; "quoted text" matches as a phrase. Empty returns every story.
 	int32 offset = 4;
 	int32 limit = 5; // Maximum number of stories returned. The protobuf default of 0 returns none, so always set it.
 }

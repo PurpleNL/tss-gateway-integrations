@@ -81,6 +81,29 @@ namespace TSS.Gateway.Sdk
 
         public async Task<StoryDataResponse> GetStoryDataAsync(string uuid, int version) => (await CallAsync("story", "data", new StoryDataRequest {Uuid = uuid, Version = version})).StoryData;
 
+        // Asset
+        public async Task<UrlAssetStreamAnswer> OfferUrlAssetStreamAsync(string uuid, string sdp, int? maxWidth = null, int? maxHeight = null, int? maxBitrateKbps = null)
+        {
+            UrlAssetStreamOfferRequest request = new UrlAssetStreamOfferRequest {Uuid = uuid, Sdp = sdp};
+
+            if (maxWidth.HasValue)
+            {
+                request.MaxWidth = maxWidth.Value;
+            }
+
+            if (maxHeight.HasValue)
+            {
+                request.MaxHeight = maxHeight.Value;
+            }
+
+            if (maxBitrateKbps.HasValue)
+            {
+                request.MaxBitrateKbps = maxBitrateKbps.Value;
+            }
+
+            return (await CallAsync("asset", "stream-offer", request)).UrlAssetStreamAnswer;
+        }
+
         // Scene
         public async Task<CurrentStateResponse> GetSceneStatusAsync() => (await CallAsync("scene", "status", EmptyMessage)).CurrentState;
 

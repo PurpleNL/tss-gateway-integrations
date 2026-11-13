@@ -27,6 +27,7 @@ message SceneEvent {
     SceneChangeCause cause = 3;
     string causeUuid = 4; // The pressed asset (onclick) or the fired trigger (trigger); empty for other causes.
     string causeIntegrationId = 5; // The pressed asset's integrationId (onclick); empty otherwise, a trigger has no integrationId.
+    int32 sceneIndex = 6; // The scene's index, see Scene in models.proto for the numbering.
 }
 
 // Events that identify the asset: asset.shown, asset.hidden, asset.playing, asset.paused,
@@ -74,6 +75,15 @@ message AssetResizedEvent {
     float height = 4;
     float left = 5;
     float bottom = 6;
+}
+
+// asset.url-changed: fired whenever the page a url asset shows changes, by an asset.change-url
+// request, a navigation request, the navigation panel, or a visitor following a link. The url is
+// the page that actually loaded, which differs from a requested one when it redirected.
+message AssetUrlChangedEvent {
+    string uuid = 1;
+    string integrationId = 2;
+    string url = 3;
 }
 
 // asset.page-changed.
@@ -223,4 +233,5 @@ enum AssetAction {
     VOLUME_CHANGED = 12;
     LOOPED = 13;
     COMPLETED = 14;
+    URL_CHANGED = 15;
 }
