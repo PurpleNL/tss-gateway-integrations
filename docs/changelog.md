@@ -2,7 +2,7 @@
 
 Protocol and documentation changes, per release. Maintained by hand, newest first.
 
-## Unreleased
+## 2026-11-13
 
 - New query `asset.stream-offer`, which starts a WebRTC stream of a url asset to one viewer. The video goes directly from the player to the viewer, the gateway only carries the handshake. See [Streaming a url asset](requests.md#streaming-a-url-asset).
 - New requests `asset.stream-resize` and `asset.stream-stop`, which change the size of a running stream and stop it.
