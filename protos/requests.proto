@@ -269,6 +269,25 @@ message TriggerFireRequest {
 	string sourceAssetIntegrationId = 4;
 }
 
+// Request instance.touch: plays a touch on the screen as if a finger touched it, so it lands on whatever
+// is under it: an asset, a navigation bar or keyboard, or the background. The touch id identifies the
+// finger across start/move/end; several ids touch at the same time. A finger silent for 5 seconds is
+// lifted, and every remote finger is lifted when the story stops.
+message InstanceTouchRequest {
+	TouchType type = 1;
+	float x = 2; // 0 to 1 of the screen, from the left.
+	float y = 3; // 0 to 1 of the screen, from the top, like UrlTouch.
+	int32 touchId = 4; // 0 or positive.
+}
+
+// The values carry the enum name because the protos share one scope and UrlTouchType owns the bare
+// names; the C# code and JSON bodies read Start, End and Move.
+enum TouchType {
+	TOUCH_TYPE_START = 0;
+	TOUCH_TYPE_END = 1;
+	TOUCH_TYPE_MOVE = 2;
+}
+
 // Answer to instance.info.
 message InstanceInfo {
 	string screenName = 1;

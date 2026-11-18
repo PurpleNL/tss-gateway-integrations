@@ -218,6 +218,10 @@ namespace TSS.Gateway.Sdk
             return RequestAsync("trigger", "fire", request, scope);
         }
 
+        // Instance
+        public Task SendInstanceTouchAsync(TouchType type, float x, float y, int touchId = 0, RequestScope scope = RequestScope.Screen) =>
+            RequestAsync("instance", "touch", new InstanceTouchRequest {Type = type, X = x, Y = y, TouchId = touchId}, scope);
+
         // The optional fields of a request are only set when a value is given, so the player keeps the current value of the others.
         private static AssetCropRequest WithMargins(AssetCropRequest request, int? left, int? right, int? top, int? bottom)
         {

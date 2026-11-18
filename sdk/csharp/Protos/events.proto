@@ -137,7 +137,8 @@ message InteractionEvent {
     string integrationId = 2;
     float x = 3;
     float y = 4;
-    int32 touchId = 5; // Identifies the finger across its events for the duration of the touch.
+    int32 touchId = 5; // Identifies the finger across its events for the duration of the touch. A remote touch carries the touchId of its instance.touch request.
+    bool remote = 6; // True for a touch played by instance.touch, false for a finger on the screen. The two can carry the same touchId.
 }
 
 // screensaver.entered and screensaver.exited: published when a scene change moves the player into or
